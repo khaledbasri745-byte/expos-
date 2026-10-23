@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة البحوث الجامعية الرقمية | جامعة صالحي أحمد بالنعامة</title>
+    
+    <!-- Google Fonts (Cairo Only) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Pro Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        /* ==========================================================================
+           1. CORE TYPOGRAPHY & CAIRO FONT CONFIG
+           ========================================================================== */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* استثناء أيقونات FontAwesome لكي لا يتأثر خطها بـ Cairo */
+        i, span.fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 6 Brands", sans-serif !important;
+        }
+
+        /* ==========================================================================
+           2. REFINED CLEAN CARDS & SHADOWS
+           ========================================================================== */
+        .academic-card {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.04), 0 4px 6px -4px rgba(15, 23, 42, 0.02);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .academic-card:hover {
+            transform: translateY(-3px);
+            border-color: #93c5fd;
+            box-shadow: 0 20px 40px -10px rgba(30, 58, 138, 0.08);
+        }
+
+        /* ==========================================================================
+           3. ACCORDION GRID ANIMATION
+           ========================================================================== */
+        .accordion-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .accordion-wrapper > div {
+            overflow: hidden;
+        }
+
+        .accordion-wrapper.expanded {
+            grid-template-rows: 1fr;
+        }
+
+        /* ==========================================================================
+           4. CUSTOM SCROLLBAR
+           ========================================================================== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-800 text-xs sm:text-sm">
+        <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+        <span id="toastMessage">تم تنفيذ الإجراء بنجاح</span>
+    </div>
+
+    <!-- ==========================================================================
+       TOP INSTITUTIONAL ANNOUNCEMENT BAR
+       ========================================================================== -->
+    <div class="bg-blue-950 text-blue-200 text-xs py-2.5 px-4 text-center font-bold tracking-wide border-b border-blue-900 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-graduation-cap text-amber-400"></i>
+        <span>المنصة الأكاديمية الرقمية الرسمية — جامعة صالحي أحمد بالنعامة (الموسم الجامعي 2026 / 2027)</span>
+    </div>
+
+    <!-- ==========================================================================
+       HEADER HERO SECTION (SOLID DESIGN WITH DISTINCT GOLDEN SEPARATION)
+       ========================================================================== -->
+    <header class="bg-blue-950 text-white relative overflow-hidden pb-16 border-b-4 border-amber-500 shadow-2xl">
+        <!-- Ambient Glow -->
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 text-center relative z-10 text-slate-900">
+            
+            <!-- University Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-900/80 border border-blue-700/60 text-blue-200 text-xs font-bold mb-6 shadow-inner backdrop-blur-md">
+                <i class="fa-solid fa-university text-amber-400"></i>
+                <span class="text-white">كلية العلوم الاقتصادية، التجارية وعلوم التسيير</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight mb-4 drop-shadow-sm">
+                قسم العلوم المالية والمحاسبة — أرشيف البحوث الجامعية
+            </h1>
+            <p class="text-sm sm:text-base text-blue-100 max-w-2xl mx-auto font-medium mb-10 leading-relaxed">
+                أعمال طلبة السنة الثالثة ليسانس (<span class="text-amber-400 font-bold">L3</span>) — الفوج الثاني (02)، تحت إشراف نخبة أساتذة القسم.
+            </p>
+
+            <!-- Quick Metadata Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto text-xs mb-10 text-right">
+                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
+                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-layer-group text-amber-400 me-1"></i> التخصص</span>
+                    <strong class="text-white text-sm font-extrabold">علوم مالية ومحاسبة</strong>
+                </div>
+                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
+                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-users text-emerald-400 me-1"></i> الفوج البيداغوجي</span>
+                    <strong class="text-white text-sm font-extrabold">الفوج الثاني (02)</strong>
+                </div>
+                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
+                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-user-shield text-sky-400 me-1"></i> قائد الفريق</span>
+                    <strong class="text-white text-sm font-extrabold">بصري خالد ابو الوليد</strong>
+                </div>
+                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
+                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-calendar-days text-amber-400 me-1"></i> الدفعة</span>
+                    <strong class="text-white text-sm font-extrabold">2026 / 2027</strong>
+                </div>
+            </div>
+
+            <!-- Team Button Modal Trigger -->
+            <div class="flex justify-center">
+                <button onclick="openTeamModal()" class="inline-flex items-center gap-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-6 py-3 rounded-xl text-xs shadow-lg transition-all cursor-pointer hover:scale-105">
+                    <i class="fa-solid fa-id-badge text-sm"></i>
+                    <span>عرض قائمة أعضاء فريق العمل والطلبة</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+       MAIN CONTENT AREA
+       ========================================================================== -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 -mt-6 relative z-20 pb-16 flex-grow w-full space-y-6">
+
+        <!-- Controls Toolbar (Search Bar on Top + Horizontal Scroll Filters Below inside Clean White Card) -->
+        <div class="academic-card p-4 sm:p-5 rounded-2xl bg-white shadow-xl space-y-4">
+            
+            <!-- Live Search Bar on Top -->
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" id="searchInput" onkeyup="filterResearch()" placeholder="بحث سريع في المقاييس، عناوين البحوث، أو الأساتذة المشرفين..." 
+                    class="w-full pl-4 pr-11 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/10 transition-all font-medium">
+            </div>
+
+            <!-- Horizontal Scroll Filter Pills Below Search -->
+            <div class="flex items-center gap-2.5 overflow-x-auto pb-1 flex-nowrap scroll-smooth no-scrollbar text-xs sm:text-sm">
+                <button onclick="setFilter('all')" id="btn-filter-all" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-extrabold transition-all cursor-pointer shadow-2xs">
+                    الكل (<span id="count-all">5</span>)
+                </button>
+                <button onclick="setFilter('pending')" id="btn-filter-pending" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
+                    قيد التحديث (<span id="count-pending">5</span>)
+                </button>
+                <button onclick="setFilter('ready')" id="btn-filter-ready" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
+                    جاهز للتحميل (<span id="count-ready">0</span>)
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Section Header -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-200 pt-2">
+            <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-folder-open text-blue-600"></i>
+                مقررات وبحوث المقاييس الدراسية (اضغط على أي مقياس لعرض التفاصيل)
+            </h2>
+            <span class="text-xs font-bold text-slate-600 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-2xs">5 مقاييس</span>
+        </div>
+
+        <!-- Research Modules Container -->
+        <div class="space-y-4" id="modulesContainer">
+
+            <!-- MODULE 1: قانون الشركات -->
+            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="قانون الشركات المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد">
+                
+                <button onclick="toggleAccordion('acc-1')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-md shadow-blue-500/25 flex items-center justify-center text-xl font-bold border border-blue-400/30 group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: قانون الشركات</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: د. بوستة محمد</span>
+                        <div id="icon-acc-1" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                </button>
+
+                <div id="acc-1" class="accordion-wrapper">
+                    <div>
+                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
+                            
+                            <!-- Title Box -->
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+                                    <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
+                                </span>
+                                <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
+                                    المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد
+                                </h4>
+                            </div>
+
+                            <!-- Team & Supervisor Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                                
+                                <!-- Team Members Box -->
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق إعداد البحث:
+                                        </span>
+                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">3 طلبة</span>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs"><i class="fa-solid fa-crown text-[10px] text-amber-300"></i></div>
+                                                <span class="font-bold text-slate-900">بصري خالد ابو الوليد</span>
+                                            </div>
+                                            <span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-md font-extrabold">قائد الفريق</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user text-[10px]"></i></div>
+                                                <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                            </div>
+                                            <span class="text-[10px] text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded-md">عضو 1</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user text-[10px]"></i></div>
+                                                <span class="font-bold text-slate-800">مباركي منصور</span>
+                                            </div>
+                                            <span class="text-[10px] text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded-md">عضو 2</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Supervisor Box -->
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
+                                    <div>
+                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
+                                            </span>
+                                        </div>
+                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
+                                                <i class="fa-solid fa-user-tie"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-black text-slate-900 text-sm">الدكتور بوستة محمد</div>
+                                                <div class="text-[11px] text-slate-500">أستاذ مقياس قانون الشركات</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="pt-2">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل (قيد التحديث):
+                                </span>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                    <a href="#" onclick="showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-word"></i> تحميل Word
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MODULE 2: نظرية المحاسبة -->
+            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="نظرية المحاسبة غير متوفر بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور عسلة 1 عسلة 2 صادق فاروق">
+                
+                <button onclick="toggleAccordion('acc-2')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-md shadow-indigo-500/25 flex items-center justify-center text-xl font-bold border border-indigo-400/30 group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: نظرية المحاسبة</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: أ. صادق فاروق</span>
+                        <div id="icon-acc-2" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                </button>
+
+                <div id="acc-2" class="accordion-wrapper">
+                    <div>
+                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
+                            
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                                    <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث:
+                                </span>
+                                <h4 class="text-sm font-bold text-slate-500 italic">
+                                    غير متوفر حالياً (سيتم نشره وإتاحته بالمنصة فور الاعتماد النهائي من الأستاذ المشرف)
+                                </h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق العمل:
+                                        </span>
+                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-crown text-[10px] text-amber-300"></i></div>
+                                                <span class="font-bold text-slate-900">بصري خالد ابو الوليد</span>
+                                            </div>
+                                            <span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded font-bold">قائد</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                            <span class="text-[10px] text-slate-500">عضو 1</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">مباركي منصور</span>
+                                            <span class="text-[10px] text-slate-500">عضو 2</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">عسلة 1</span>
+                                            <span class="text-[10px] text-slate-500">عضو 3</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">عسلة 2</span>
+                                            <span class="text-[10px] text-slate-500">عضو 4</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
+                                    <div>
+                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
+                                            </span>
+                                        </div>
+                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
+                                                <i class="fa-solid fa-user-tie"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-black text-slate-900 text-sm">الأستاذ صادق فاروق</div>
+                                                <div class="text-[11px] text-slate-500">أستاذ مقياس نظرية المحاسبة</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-2">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
+                                </span>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-word"></i> تحميل Word
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MODULE 3: محاسبة الشركات -->
+            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="محاسبة الشركات المعالجة المحاسبية للخسائر واثرها على الوضعية المالية للمؤسسة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف كرفيس فاطمة">
+                
+                <button onclick="toggleAccordion('acc-3')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-500/25 flex items-center justify-center text-xl font-bold border border-emerald-400/30 group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: محاسبة الشركات</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: أ. كرفيس فاطمة</span>
+                        <div id="icon-acc-3" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                </button>
+
+                <div id="acc-3" class="accordion-wrapper">
+                    <div>
+                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
+                            
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+                                    <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
+                                </span>
+                                <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
+                                    المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة
+                                </h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                                
+                                <!-- Team Members Box -->
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق إعداد البحث:
+                                        </span>
+                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-crown text-[9px] text-amber-300"></i></div>
+                                                <span class="font-bold text-slate-900">بصري خالد ابو الوليد</span>
+                                            </div>
+                                            <span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded font-bold">قائد</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                            <span class="text-[10px] text-slate-500">عضو 1</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">مباركي منصور</span>
+                                            <span class="text-[10px] text-slate-500">عضو 2</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">برنو عبد النور</span>
+                                            <span class="text-[10px] text-slate-500">عضو 3</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">بن عباس يوسف</span>
+                                            <span class="text-[10px] text-slate-500">عضو 4</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
+                                    <div>
+                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
+                                            </span>
+                                        </div>
+                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
+                                                <i class="fa-solid fa-user-tie"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-black text-slate-900 text-sm">الأستاذة كرفيس فاطمة</div>
+                                                <div class="text-[11px] text-slate-500">أستاذة مقياس محاسبة الشركات</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والإدراج النهائي
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="pt-2">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
+                                </span>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                    <a href="#" onclick="showToast('الملف قيد التحديث والرفع قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد التحديث والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-word"></i> تحميل Word
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد التحديث والرفع قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MODULE 4: جباية المؤسسة -->
+            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="جباية المؤسسة غير متوفر بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور ملوك محمد">
+                
+                <button onclick="toggleAccordion('acc-4')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/25 flex items-center justify-center text-xl font-bold border border-amber-400/30 group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: جباية المؤسسة</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: أ. ملوك محمد</span>
+                        <div id="icon-acc-4" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                </button>
+
+                <div id="acc-4" class="accordion-wrapper">
+                    <div>
+                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
+                            
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                                    <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث:
+                                </span>
+                                <h4 class="text-sm font-bold text-slate-500 italic">
+                                    غير متوفر حالياً (سيتم رفعه فور اعتماد الأستاذ المشرف)
+                                </h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق العمل:
+                                        </span>
+                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">3 طلبة</span>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-crown text-[10px] text-amber-300"></i></div>
+                                                <span class="font-bold text-slate-900">بصري خالد ابو الوليد</span>
+                                            </div>
+                                            <span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded font-bold">قائد</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user text-[10px]"></i></div>
+                                                <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                            </div>
+                                            <span class="text-[10px] text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded-md">عضو 1</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user text-[10px]"></i></div>
+                                                <span class="font-bold text-slate-800">مباركي منصور</span>
+                                            </div>
+                                            <span class="text-[10px] text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded-md">عضو 2</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
+                                    <div>
+                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
+                                            </span>
+                                        </div>
+                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
+                                                <i class="fa-solid fa-user-tie"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-black text-slate-900 text-sm">الأستاذ ملوك محمد</div>
+                                                <div class="text-[11px] text-slate-500">أستاذ مقياس جباية المؤسسة</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-2">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
+                                </span>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-word"></i> تحميل Word
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MODULE 5: التسيير المالي -->
+            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="التسيير المالي غير متوفر بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
+                
+                <button onclick="toggleAccordion('acc-5')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-700 text-white shadow-md shadow-violet-500/25 flex items-center justify-center text-xl font-bold border border-violet-400/30 group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: التسيير المالي</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: أ. قاسمي عبد الكريم</span>
+                        <div id="icon-acc-5" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                </button>
+
+                <div id="acc-5" class="accordion-wrapper">
+                    <div>
+                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
+                            
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                                    <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث:
+                                </span>
+                                <h4 class="text-sm font-bold text-slate-500 italic">
+                                    غير متوفر حالياً (سيتم نشره وإتاحته بالمنصة فور الاعتماد النهائي من الأستاذ المشرف)
+                                </h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                                
+                                <!-- Team Members Box -->
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق إعداد البحث:
+                                        </span>
+                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-crown text-[9px] text-amber-300"></i></div>
+                                                <span class="font-bold text-slate-900">بصري خالد ابو الوليد</span>
+                                            </div>
+                                            <span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded font-bold">قائد</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                            <span class="text-[10px] text-slate-500">عضو 1</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">مباركي منصور</span>
+                                            <span class="text-[10px] text-slate-500">عضو 2</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">برنو عبد النور</span>
+                                            <span class="text-[10px] text-slate-500">عضو 3</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
+                                            <span class="font-bold text-slate-800">بن عباس يوسف</span>
+                                            <span class="text-[10px] text-slate-500">عضو 4</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
+                                    <div>
+                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
+                                            </span>
+                                        </div>
+                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
+                                                <i class="fa-solid fa-user-tie"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-black text-slate-900 text-sm">الأستاذ قاسمي عبد الكريم</div>
+                                                <div class="text-[11px] text-slate-500">أستاذ مقياس التسيير المالي</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="pt-2">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
+                                </span>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-word"></i> تحميل Word
+                                    </a>
+                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ==========================================================================
+       MODAL: TEAM MEMBERS MODAL
+       ========================================================================== -->
+    <div id="teamModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
+            <div class="p-5 bg-blue-950 text-white flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base">فريق العمل وأعضاء الدفعة</h3>
+                        <p class="text-xs text-blue-200">السنة الثالثة ليسانس محاسبة ومالية - الفوج 02</p>
+                    </div>
+                </div>
+                <button onclick="closeTeamModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center transition-colors cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4 text-sm text-slate-700">
+                <!-- Leader Box -->
+                <div class="p-4 rounded-2xl bg-blue-50 border border-blue-100 flex items-center gap-3.5 shadow-2xs">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-xs">
+                        <i class="fa-solid fa-crown text-amber-300"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-extrabold text-blue-600 block mb-0.5 uppercase tracking-wider">قائد الفريق والمطور الرئيسي</span>
+                        <h4 class="font-black text-slate-900 text-base">بصري خالد ابو الوليد</h4>
+                    </div>
+                </div>
+
+                <!-- Team Members Grid -->
+                <div class="space-y-2.5">
+                    <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider block px-1">أعضاء الفريق الأساسيون:</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
+                            <i class="fa-solid fa-user-graduate text-blue-600"></i> بوشحي شيخ البشير
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
+                            <i class="fa-solid fa-user-graduate text-blue-600"></i> مباركي منصور
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
+                            <i class="fa-solid fa-user-graduate text-blue-600"></i> برنو عبد النور
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
+                            <i class="fa-solid fa-user-graduate text-blue-600"></i> بن عباس يوسف
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
+                            <i class="fa-solid fa-user-graduate text-blue-600"></i> عسلة 1
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
+                            <i class="fa-solid fa-user-graduate text-blue-600"></i> عسلة 2
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-200 text-center">
+                <button onclick="closeTeamModal()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all cursor-pointer text-xs shadow-2xs">إغلاق القائمة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       FOOTER SECTION
+       ========================================================================== -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-10 px-4 mt-16">
+        <div class="max-w-5xl mx-auto text-center space-y-4">
+            
+            <div class="inline-flex items-center gap-2 text-xs font-bold text-slate-300 bg-slate-800 px-4 py-1.5 rounded-full border border-slate-700">
+                <i class="fa-solid fa-university text-blue-400"></i>
+                جامعة صالحي أحمد بالنعامة — كلية العلوم الاقتصادية والتجارية وعلوم التسيير
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+                جميع الحقوق محفوظة © 2026 / 2027 لطلبة الدفعة الثالثة ليسانس محاسبة ومالية. إعداد وتطوير المنصة بواسطة الطلبة بقيادة <strong class="text-white">بصري خالد ابو الوليد</strong>.
+            </p>
+
+            <div class="pt-2">
+                <a href="mailto:khaled.basri745@gmail.com" class="inline-flex items-center gap-2.5 bg-slate-800 hover:bg-slate-700 text-blue-300 hover:text-white px-5 py-2.5 rounded-xl text-xs font-bold border border-slate-700 transition-all shadow-md">
+                    <i class="fa-regular fa-envelope text-blue-400 text-base"></i>
+                    <span>khaled.basri745@gmail.com</span>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+       JAVASCRIPT LOGIC ENGINE
+       ========================================================================== -->
+    <script>
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        // Accordion Toggle (ALL CLOSED BY DEFAULT)
+        function toggleAccordion(id) {
+            const target = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            const isExpanded = target.classList.contains('expanded');
+
+            document.querySelectorAll('.accordion-wrapper').forEach(acc => {
+                acc.classList.remove('expanded');
+            });
+            document.querySelectorAll('[id^="icon-acc-"]').forEach(ic => {
+                ic.style.transform = 'rotate(0deg)';
+            });
+
+            if (!isExpanded) {
+                target.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Live Search
+        function filterResearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.module-card');
+
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-search').toLowerCase();
+                if (searchData.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter Pills
+        function setFilter(status) {
+            const cards = document.querySelectorAll('.module-card');
+            const buttons = ['all', 'ready', 'pending'];
+            
+            buttons.forEach(b => {
+                const btn = document.getElementById('btn-filter-' + b);
+                if (b === status) {
+                    btn.className = "whitespace-nowrap px-4 py-2.5 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-extrabold transition-all cursor-pointer shadow-2xs";
+                } else {
+                    btn.className = "whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer";
+                }
+            });
+
+            cards.forEach(card => {
+                const cardStatus = card.getAttribute('data-status');
+                if (status === 'all' || cardStatus === status) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Team Modal
+        function openTeamModal() {
+            document.getElementById('teamModal').classList.remove('hidden');
+        }
+        function closeTeamModal() {
+            document.getElementById('teamModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
