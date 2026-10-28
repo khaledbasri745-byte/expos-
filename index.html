@@ -120,7 +120,7 @@
     </div>
 
     <!-- ==========================================================================
-       HEADER HERO SECTION (SOLID DESIGN WITH DISTINCT GOLDEN SEPARATION)
+       HEADER HERO SECTION
        ========================================================================== -->
     <header class="bg-blue-950 text-white relative overflow-hidden pb-16 border-b-4 border-amber-500 shadow-2xl">
         <!-- Ambient Glow -->
@@ -165,7 +165,7 @@
             <div class="flex justify-center">
                 <button onclick="openTeamModal()" class="inline-flex items-center gap-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-6 py-3 rounded-xl text-xs shadow-lg transition-all cursor-pointer hover:scale-105">
                     <i class="fa-solid fa-id-badge text-sm"></i>
-                    <span>عرض قائمة أعضاء فريق العمل والطلبة</span>
+                    <span>عرض قائمة أعضاء فريق العمل والطلبة وكذا الاساتذة المشرفين</span>
                 </button>
             </div>
 
@@ -689,7 +689,7 @@
             </div>
 
             <!-- MODULE 5: التسيير المالي -->
-            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="التسيير المالي غير متوفر بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
+            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="التسيير المالي تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
                 
                 <button onclick="toggleAccordion('acc-5')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
                     <div class="flex items-center gap-4">
@@ -716,11 +716,11 @@
                         <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
                             
                             <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                                    <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث:
+                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+                                    <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
                                 </span>
-                                <h4 class="text-sm font-bold text-slate-500 italic">
-                                    غير متوفر حالياً (سيتم نشره وإتاحته بالمنصة فور الاعتماد النهائي من الأستاذ المشرف)
+                                <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
+                                    تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل
                                 </h4>
                             </div>
 
@@ -813,17 +813,17 @@
     </main>
 
     <!-- ==========================================================================
-       MODAL: TEAM MEMBERS MODAL
+       MODAL: TEAM & PROFESSORS TOGGLE MODAL (Without Scroll)
        ========================================================================== -->
     <div id="teamModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
-            <div class="p-5 bg-blue-950 text-white flex justify-between items-center">
+            <div class="p-5 bg-blue-950 text-white flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center">
                         <i class="fa-solid fa-users-gear"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base">فريق العمل وأعضاء الدفعة</h3>
+                        <h3 class="font-bold text-base">دليل الجامعة والطلبة</h3>
                         <p class="text-xs text-blue-200">السنة الثالثة ليسانس محاسبة ومالية - الفوج 02</p>
                     </div>
                 </div>
@@ -831,45 +831,100 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="p-6 space-y-4 text-sm text-slate-700">
-                <!-- Leader Box -->
-                <div class="p-4 rounded-2xl bg-blue-50 border border-blue-100 flex items-center gap-3.5 shadow-2xs">
-                    <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-xs">
-                        <i class="fa-solid fa-crown text-amber-300"></i>
+            
+            <!-- Toggle Navigation Buttons inside Modal -->
+            <div class="p-4 bg-slate-100 border-b border-slate-200 flex gap-2">
+                <button onclick="switchModalTab('students')" id="tab-students" class="flex-1 py-2.5 px-3 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-blue-600 text-white shadow-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-users text-amber-300"></i> قائمة الطلبة وفريق العمل
+                </button>
+                <button onclick="switchModalTab('professors')" id="tab-professors" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer">
+                    <i class="fa-solid fa-chalkboard-user text-blue-600"></i> قائمة الأساتذة والمقاييس
+                </button>
+            </div>
+
+            <!-- Modal Content Panels (No Scroll, perfectly fitted) -->
+            <div class="p-5 text-sm text-slate-700">
+                
+                <!-- STUDENTS VIEW PANEL -->
+                <div id="panel-students" class="space-y-3">
+                    <div class="p-3 rounded-xl bg-blue-50 border border-blue-100 flex items-center gap-3 shadow-2xs">
+                        <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-crown text-amber-300"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-extrabold text-blue-600 block uppercase">قائد الفريق والمطور الرئيسي</span>
+                            <h4 class="font-black text-slate-900 text-xs sm:text-sm">بصري خالد ابو الوليد</h4>
+                        </div>
                     </div>
-                    <div>
-                        <span class="text-xs font-extrabold text-blue-600 block mb-0.5 uppercase tracking-wider">قائد الفريق والمطور الرئيسي</span>
-                        <h4 class="font-black text-slate-900 text-base">بصري خالد ابو الوليد</h4>
+
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider block">أعضاء الفريق والطلبة:</span>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> بوشحي شيخ البشير
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> مباركي منصور
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> برنو عبد النور
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> بن عباس يوسف
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> عسلة 1
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> عسلة 2
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Team Members Grid -->
-                <div class="space-y-2.5">
-                    <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider block px-1">أعضاء الفريق الأساسيون:</span>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
-                            <i class="fa-solid fa-user-graduate text-blue-600"></i> بوشحي شيخ البشير
+                <!-- PROFESSORS VIEW PANEL -->
+                <div id="panel-professors" class="space-y-2.5 hidden text-xs">
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-user-tie text-blue-600"></i>
+                            <span class="font-extrabold text-slate-900">الدكتور بوستة محمد</span>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
-                            <i class="fa-solid fa-user-graduate text-blue-600"></i> مباركي منصور
+                        <span class="font-bold text-blue-700 bg-blue-100/60 px-2.5 py-1 rounded-lg">قانون الشركات</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-user-tie text-indigo-600"></i>
+                            <span class="font-extrabold text-slate-900">الأستاذ صادق فاروق</span>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
-                            <i class="fa-solid fa-user-graduate text-blue-600"></i> برنو عبد النور
+                        <span class="font-bold text-indigo-700 bg-indigo-100/60 px-2.5 py-1 rounded-lg">نظرية المحاسبة</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-user-tie text-emerald-600"></i>
+                            <span class="font-extrabold text-slate-900">الأستاذة كرفيس فاطمة</span>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
-                            <i class="fa-solid fa-user-graduate text-blue-600"></i> بن عباس يوسف
+                        <span class="font-bold text-emerald-700 bg-emerald-100/60 px-2.5 py-1 rounded-lg">محاسبة الشركات</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-user-tie text-amber-600"></i>
+                            <span class="font-extrabold text-slate-900">الأستاذ ملوك محمد</span>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
-                            <i class="fa-solid fa-user-graduate text-blue-600"></i> عسلة 1
+                        <span class="font-bold text-amber-700 bg-amber-100/60 px-2.5 py-1 rounded-lg">جباية المؤسسة</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-user-tie text-violet-600"></i>
+                            <span class="font-extrabold text-slate-900">الأستاذ قاسمي عبد الكريم</span>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2.5 text-xs">
-                            <i class="fa-solid fa-user-graduate text-blue-600"></i> عسلة 2
-                        </div>
+                        <span class="font-bold text-violet-700 bg-violet-100/60 px-2.5 py-1 rounded-lg">التسيير المالي</span>
                     </div>
                 </div>
+
             </div>
-            <div class="p-4 bg-slate-50 border-t border-slate-200 text-center">
-                <button onclick="closeTeamModal()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all cursor-pointer text-xs shadow-2xs">إغلاق القائمة</button>
+
+            <div class="p-4 bg-slate-50 border-t border-slate-200 text-center shrink-0">
+                <button onclick="closeTeamModal()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all cursor-pointer text-xs shadow-2xs">إغلاق النافذة</button>
             </div>
         </div>
     </div>
@@ -886,7 +941,8 @@
             </div>
 
             <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
-           جميع الحقوق محفوظة © 2026 / 2027 لطلبة الدفعة الثالثة ليسانس محاسبة ومالية.    </p>
+                جميع الحقوق محفوظة © 2026 / 2027 لطلبة الدفعة الثالثة ليسانس محاسبة ومالية. إعداد وتطوير المنصة بواسطة الطلبة بقيادة <strong class="text-white">بصري خالد ابو الوليد</strong>.
+            </p>
 
             <div class="pt-2">
                 <a href="mailto:khaled.basri745@gmail.com" class="inline-flex items-center gap-2.5 bg-slate-800 hover:bg-slate-700 text-blue-300 hover:text-white px-5 py-2.5 rounded-xl text-xs font-bold border border-slate-700 transition-all shadow-md">
@@ -970,9 +1026,30 @@
             });
         }
 
+        // Team Modal Switcher Tabs
+        function switchModalTab(tab) {
+            const tabStudents = document.getElementById('tab-students');
+            const tabProfessors = document.getElementById('tab-professors');
+            const panelStudents = document.getElementById('panel-students');
+            const panelProfessors = document.getElementById('panel-professors');
+
+            if (tab === 'students') {
+                tabStudents.className = "flex-1 py-2.5 px-3 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-blue-600 text-white shadow-xs transition-all cursor-pointer";
+                tabProfessors.className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer";
+                panelStudents.classList.remove('hidden');
+                panelProfessors.classList.add('hidden');
+            } else {
+                tabProfessors.className = "flex-1 py-2.5 px-3 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-blue-600 text-white shadow-xs transition-all cursor-pointer";
+                tabStudents.className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer";
+                panelProfessors.classList.remove('hidden');
+                panelStudents.classList.add('hidden');
+            }
+        }
+
         // Team Modal
         function openTeamModal() {
             document.getElementById('teamModal').classList.remove('hidden');
+            switchModalTab('students'); // افتراضياً تفتح على قائمة الطلبة
         }
         function closeTeamModal() {
             document.getElementById('teamModal').classList.add('hidden');
@@ -980,3 +1057,4 @@
     </script>
 </body>
 </html>
+
