@@ -177,7 +177,7 @@
        ========================================================================== -->
     <main class="max-w-5xl mx-auto px-4 sm:px-6 -mt-6 relative z-20 pb-16 flex-grow w-full space-y-6">
 
-        <!-- Controls Toolbar (Search Bar on Top + Horizontal Scroll Filters Below inside Clean White Card) -->
+        <!-- Controls Toolbar -->
         <div class="academic-card p-4 sm:p-5 rounded-2xl bg-white shadow-xl space-y-4">
             
             <!-- Live Search Bar on Top -->
@@ -193,10 +193,10 @@
                     الكل (<span id="count-all">4</span>)
                 </button>
                 <button onclick="setFilter('pending')" id="btn-filter-pending" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
-                    قيد التحديث (<span id="count-pending">3</span>)
+                    قيد التحديث (<span id="count-pending">2</span>)
                 </button>
                 <button onclick="setFilter('ready')" id="btn-filter-ready" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
-                    جاهز للتحميل (<span id="count-ready">1</span>)
+                    جاهز للتحميل (<span id="count-ready">2</span>)
                 </button>
             </div>
 
@@ -214,7 +214,7 @@
         <!-- Research Modules Container -->
         <div class="space-y-4" id="modulesContainer">
 
-            <!-- MODULE 1: قانون الشركات -->
+            <!-- MODULE 1: قانون الشركات (Excluded from DataShow note as requested) -->
             <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="قانون الشركات المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد">
                 
                 <button onclick="toggleAccordion('acc-1')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
@@ -241,7 +241,6 @@
                     <div>
                         <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
                             
-                            <!-- Title Box -->
                             <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
                                 <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
                                     <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
@@ -251,10 +250,7 @@
                                 </h4>
                             </div>
 
-                            <!-- Team & Supervisor Grid -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                                
-                                <!-- Team Members Box -->
                                 <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
                                     <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
                                         <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
@@ -287,7 +283,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Supervisor Box -->
                                 <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
                                     <div>
                                         <div class="border-b border-slate-100 pb-2.5 mb-3">
@@ -309,13 +304,11 @@
                                         <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
                                     </div>
                                 </div>
-
                             </div>
 
-                            <!-- Action Buttons -->
                             <div class="pt-2">
                                 <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
-                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل (قيد التحديث):
+                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل:
                                 </span>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                                     <a href="#" onclick="showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
@@ -336,17 +329,17 @@
 
             </div>
 
-            <!-- MODULE 2: نظرية المحاسبة -->
-            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="نظرية المحاسبة موقع النظام المحاسبي المالي من نظرية المحاسبة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوزيدي نصر الله حمادة محمد صادق فاروق">
+            <!-- MODULE 2: نظرية المحاسبة (Updated to READY with direct PDF & Word links + DataShow Note) -->
+            <div class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200" data-status="ready" data-search="نظرية المحاسبة موقع النظام المحاسبي المالي من نظرية المحاسبة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوزيدي نصر الله حمادة محمد صادق فاروق">
                 
-                <button onclick="toggleAccordion('acc-2')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                <button onclick="toggleAccordion('acc-2')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
                     <div class="flex items-center gap-4">
                         <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-md shadow-indigo-500/25 flex items-center justify-center text-xl font-bold border border-indigo-400/30 group-hover:scale-105 transition-transform">
                             <i class="fa-solid fa-book-bookmark"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1"><i class="fa-solid fa-circle-check text-[8px]"></i> جاهز للتحميل</span>
                             </div>
                             <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: نظرية المحاسبة</h3>
                         </div>
@@ -364,7 +357,7 @@
                         <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
                             
                             <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+                                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-1">
                                     <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
                                 </span>
                                 <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
@@ -376,9 +369,9 @@
                                 <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
                                     <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
                                         <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق العمل:
+                                            <i class="fa-solid fa-users-line text-indigo-600"></i> أعضاء فريق العمل:
                                         </span>
-                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
+                                        <span class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
                                     </div>
                                     <div class="space-y-2">
                                         <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
@@ -408,11 +401,11 @@
                                     <div>
                                         <div class="border-b border-slate-100 pb-2.5 mb-3">
                                             <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
+                                                <i class="fa-solid fa-chalkboard-user text-indigo-600"></i> المشرف الأكاديمي:
                                             </span>
                                         </div>
                                         <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
-                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
+                                            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-base border border-indigo-200">
                                                 <i class="fa-solid fa-user-tie"></i>
                                             </div>
                                             <div>
@@ -421,26 +414,31 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
-                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
+                                    <div class="text-[11px] text-emerald-700 flex items-center gap-1.5 pt-2 font-bold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check"></i> البحث مكتمل وجاهز للتحميل المباشر
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="pt-2">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
-                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
+                            <div class="pt-2 space-y-3">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                                    <i class="fa-solid fa-box-archive me-1 text-indigo-600"></i> خيارات التحميل والملفات:
                                 </span>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
+                                    <a href="https://bosfiles.net/download/Hwi371iqAr3T9-7NR_O5lQ" target="_blank" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-md transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-download"></i> تحميل PDF (مباشر)
                                     </a>
-                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-word"></i> تحميل Word
+                                    <a href="https://bosfiles.net/download/doDvhM9NbLrukbY5Y5_eaw" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-md transition-transform hover:-translate-y-0.5">
+                                        <i class="fa-solid fa-file-word"></i> تحميل Word (مباشر)
                                     </a>
-                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
+                                    <a href="#" onclick="showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
+                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint (غير متوفر)
                                     </a>
+                                </div>
+                                <!-- DataShow Note as requested -->
+                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-[11px] font-bold flex items-center gap-2">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm"></i>
+                                    <span>ملاحظة: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
                                 </div>
                             </div>
 
@@ -450,7 +448,7 @@
 
             </div>
 
-            <!-- MODULE 3: محاسبة الشركات (جاهز للتحميل) -->
+            <!-- MODULE 3: محاسبة الشركات (Ready with DataShow Note) -->
             <div class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200" data-status="ready" data-search="محاسبة الشركات المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف كرفيس فاطمة">
                 
                 <button onclick="toggleAccordion('acc-3')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
@@ -488,7 +486,6 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                                 
-                                <!-- Team Members Box -->
                                 <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
                                     <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
                                         <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
@@ -544,8 +541,8 @@
 
                             </div>
 
-                            <div class="pt-2">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+                            <div class="pt-2 space-y-3">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">
                                     <i class="fa-solid fa-box-archive me-1 text-emerald-600"></i> خيارات التحميل والملفات:
                                 </span>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -555,9 +552,14 @@
                                     <a href="#" onclick="showToast('الملف قيد التحديث والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
                                         <i class="fa-solid fa-file-word"></i> تحميل Word (غير جاهز) 
                                     </a>
-                                    <a href="#" onclick="showToast('الملف قيد التحديث والرفع قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
-                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint (غير جاهز) 
+                                    <a href="#" onclick="showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
+                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint (غير متوفر) 
                                     </a>
+                                </div>
+                                <!-- DataShow Note as requested -->
+                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-[11px] font-bold flex items-center gap-2">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm"></i>
+                                    <span>ملاحظة: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
                                 </div>
                             </div>
 
@@ -567,7 +569,7 @@
 
             </div>
 
-            <!-- MODULE 4: التسيير المالي -->
+            <!-- MODULE 4: التسيير المالي (Pending with DataShow Note) -->
             <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="التسيير المالي تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
                 
                 <button onclick="toggleAccordion('acc-4')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
@@ -605,7 +607,6 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                                 
-                                <!-- Team Members Box -->
                                 <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
                                     <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
                                         <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
@@ -661,8 +662,8 @@
 
                             </div>
 
-                            <div class="pt-2">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+                            <div class="pt-2 space-y-3">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">
                                     <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
                                 </span>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -672,9 +673,14 @@
                                     <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
                                         <i class="fa-solid fa-file-word"></i> تحميل Word
                                     </a>
-                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
+                                    <a href="#" onclick="showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
                                         <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
                                     </a>
+                                </div>
+                                <!-- DataShow Note as requested -->
+                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-[11px] font-bold flex items-center gap-2">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm"></i>
+                                    <span>ملاحظة: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
                                 </div>
                             </div>
 
@@ -689,7 +695,7 @@
     </main>
 
     <!-- ==========================================================================
-       MODAL: TEAM & PROFESSORS TOGGLE MODAL (Without Scroll)
+       MODAL: TEAM & PROFESSORS TOGGLE MODAL
        ========================================================================== -->
     <div id="teamModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
@@ -708,7 +714,6 @@
                 </button>
             </div>
             
-            <!-- Toggle Navigation Buttons inside Modal -->
             <div class="p-4 bg-slate-100 border-b border-slate-200 flex gap-2">
                 <button onclick="switchModalTab('students')" id="tab-students" class="flex-1 py-2.5 px-3 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-blue-600 text-white shadow-xs transition-all cursor-pointer">
                     <i class="fa-solid fa-users text-amber-300"></i> قائمة الطلبة وفريق العمل
@@ -718,10 +723,8 @@
                 </button>
             </div>
 
-            <!-- Modal Content Panels (No Scroll, perfectly fitted) -->
             <div class="p-5 text-sm text-slate-700">
                 
-                <!-- STUDENTS VIEW PANEL -->
                 <div id="panel-students" class="space-y-3">
                     <div class="space-y-2">
                         <span class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider block">أعضاء الفريق والطلبة:</span>
@@ -751,7 +754,6 @@
                     </div>
                 </div>
 
-                <!-- PROFESSORS VIEW PANEL -->
                 <div id="panel-professors" class="space-y-2.5 hidden text-xs">
                     <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
                         <div class="flex items-center gap-2">
@@ -830,7 +832,7 @@
             }, 3500);
         }
 
-        // Accordion Toggle (ALL CLOSED BY DEFAULT)
+        // Accordion Toggle
         function toggleAccordion(id) {
             const target = document.getElementById(id);
             const icon = document.getElementById('icon-' + id);
