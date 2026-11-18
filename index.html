@@ -17,9 +17,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <style>
-        /* ==========================================================================
-           1. CORE TYPOGRAPHY & CAIRO FONT CONFIG
-           ========================================================================== */
         :root {
             --bg-primary: #ffffff;
             --bg-secondary: #f8fafc;
@@ -38,47 +35,124 @@
             text-rendering: optimizeLegibility;
         }
 
-        /* استثناء أيقونات FontAwesome لكي لا يتأثر خطها بـ Cairo */
         i, span.fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
             font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 6 Brands", sans-serif !important;
         }
 
-        /* ==========================================================================
-           2. REFINED CLEAN CARDS & SHADOWS
-           ========================================================================== */
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(28px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(3deg); }
+        }
+
+        @keyframes shimmerSweep {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .animate-hero-item {
+            opacity: 0;
+            animation: fadeSlideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-top-bar {
+            animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-float-slow {
+            animation: floatSlow 7s ease-in-out infinite;
+        }
+
+        .animate-float-delayed {
+            animation: floatSlow 9s ease-in-out 2s infinite;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
         .academic-card {
             background: #ffffff;
             border: 1px solid var(--card-border);
-            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.04), 0 4px 6px -4px rgba(15, 23, 42, 0.02);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 4px 6px -4px rgba(15, 23, 42, 0.02);
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
         .academic-card:hover {
             transform: translateY(-3px);
-            border-color: #93c5fd;
-            box-shadow: 0 20px 40px -10px rgba(30, 58, 138, 0.08);
+            border-color: #60a5fa;
+            box-shadow: 0 20px 40px -12px rgba(30, 58, 138, 0.12), 0 8px 16px -6px rgba(30, 58, 138, 0.04);
         }
 
-        /* ==========================================================================
-           3. ACCORDION GRID ANIMATION
-           ========================================================================== */
-        .accordion-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .academic-card.active-card {
+            border-color: #3b82f6;
+            box-shadow: 0 24px 50px -15px rgba(30, 58, 138, 0.15);
         }
 
-        .accordion-wrapper > div {
+        .hero-grid-pattern {
+            background-image: radial-gradient(rgba(147, 197, 253, 0.15) 1.5px, transparent 1.5px);
+            background-size: 28px 28px;
+        }
+
+        .btn-shimmer {
+            position: relative;
             overflow: hidden;
         }
-
-        .accordion-wrapper.expanded {
-            grid-template-rows: 1fr;
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: translateX(100%);
+            transition: none;
+        }
+        .btn-shimmer:hover::after {
+            animation: shimmerSweep 0.85s ease-in-out;
         }
 
-        /* ==========================================================================
-           4. CUSTOM SCROLLBAR
-           ========================================================================== */
+        /* Fixed Accordion Engine */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        .accordion-content.expanded {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .modal-backdrop {
+            opacity: 0;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-backdrop.show {
+            opacity: 1;
+        }
+        .modal-box {
+            animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
             height: 6px;
@@ -105,585 +179,629 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
 
-    <!-- Toast Notification Popup -->
-    <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-800 text-xs sm:text-sm">
-        <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
-        <span id="toastMessage">تم تنفيذ الإجراء بنجاح</span>
+    <!-- Top Scroll Progress Indicator -->
+    <div id="scrollProgress" class="fixed top-0 right-0 h-1.5 bg-gradient-to-l from-amber-400 via-amber-500 to-blue-500 z-50 transition-all duration-150 shadow-sm" style="width: 0%;"></div>
+
+    <!-- Elite Toast Notification Popup -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-28 opacity-0 scale-95 transition-all duration-400 cubic-bezier(0.16, 1, 0.3, 1) bg-slate-900/95 backdrop-blur-xl text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3.5 border border-slate-700/80 text-xs sm:text-sm max-w-sm">
+        <div id="toastIconContainer" class="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
+            <i id="toastIcon" class="fa-solid fa-circle-check text-amber-400 text-base"></i>
+        </div>
+        <div class="flex flex-col">
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">إشعار المنصة</span>
+            <span id="toastMessage" class="font-bold text-slate-100 leading-snug">تم تنفيذ الإجراء بنجاح</span>
+        </div>
     </div>
 
     <!-- ==========================================================================
        TOP INSTITUTIONAL ANNOUNCEMENT BAR
        ========================================================================== -->
-    <div class="bg-blue-950 text-blue-200 text-xs py-2.5 px-4 text-center font-bold tracking-wide border-b border-blue-900 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-graduation-cap text-amber-400"></i>
-        <span>المنصة الأكاديمية الرقمية الرسمية — جامعة صالحي أحمد بالنعامة (الموسم الجامعي 2026 / 2027)</span>
+    <div class="animate-top-bar bg-blue-950 text-blue-200 text-xs py-3 px-4 text-center font-bold tracking-wide border-b border-blue-900/90 flex flex-wrap items-center justify-center gap-3 relative z-20 shadow-inner">
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-white">المنصة الأكاديمية الرقمية الرسمية — جامعة صالحي أحمد بالنعامة</span>
+        </div>
+        <span class="hidden sm:inline text-blue-400">|</span>
+        <span class="text-amber-300 bg-blue-900/80 px-3 py-1 rounded-full border border-blue-800 text-[11px]">
+            <i class="fa-solid fa-calendar-days me-1"></i> الموسم الجامعي 2026 / 2027
+        </span>
     </div>
 
     <!-- ==========================================================================
        HEADER HERO SECTION
        ========================================================================== -->
-    <header class="bg-blue-950 text-white relative overflow-hidden pb-16 border-b-4 border-amber-500 shadow-2xl">
-        <!-- Ambient Glow -->
-        <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <header class="bg-blue-950 text-white relative overflow-hidden pb-24 border-b-4 border-amber-500 shadow-2xl hero-grid-pattern">
+        <div class="animate-float-slow absolute -top-12 right-1/4 w-[420px] h-[420px] bg-blue-500/15 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="animate-float-delayed absolute -bottom-10 left-1/5 w-[380px] h-[380px] bg-amber-500/10 rounded-full blur-[130px] pointer-events-none"></div>
 
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 text-center relative z-10 text-slate-900">
-            
-            <!-- University Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-900/80 border border-blue-700/60 text-blue-200 text-xs font-bold mb-6 shadow-inner backdrop-blur-md">
-                <i class="fa-solid fa-university text-amber-400"></i>
-                <span class="text-white">كلية العلوم الاقتصادية، التجارية وعلوم التسيير</span>
+        <i class="fa-solid fa-building-columns text-blue-400/5 text-[160px] absolute -bottom-8 right-6 pointer-events-none animate-float-slow"></i>
+        <i class="fa-solid fa-graduation-cap text-amber-400/5 text-[140px] absolute top-10 left-8 pointer-events-none animate-float-delayed"></i>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-20 text-center relative z-10">
+            <div class="animate-hero-item delay-100 inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-blue-900/85 border border-blue-700/60 text-blue-200 text-xs font-bold mb-6 shadow-xl backdrop-blur-md">
+                <i class="fa-solid fa-university text-amber-400 text-sm"></i>
+                <span class="text-white tracking-wide">كلية العلوم الاقتصادية، التجارية وعلوم التسيير</span>
             </div>
 
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight mb-4 drop-shadow-sm">
-                قسم العلوم المالية والمحاسبة — أرشيف البحوث الجامعية
+            <h1 class="animate-hero-item delay-200 text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight mb-5 drop-shadow-md">
+                قسم العلوم المالية والمحاسبة — <br class="hidden md:block"/><span class="text-transparent bg-clip-text bg-gradient-to-l from-amber-300 via-amber-400 to-white">أرشيف البحوث الجامعية الرقمية</span>
             </h1>
-            <p class="text-sm sm:text-base text-blue-100 max-w-2xl mx-auto font-medium mb-10 leading-relaxed">
-                أعمال طلبة السنة الثالثة ليسانس (<span class="text-amber-400 font-bold">L3</span>) — الفوج الثاني (02)، تحت إشراف نخبة أساتذة القسم.
+            <p class="animate-hero-item delay-300 text-sm sm:text-base text-blue-100/90 max-w-2xl mx-auto font-medium mb-10 leading-relaxed">
+                أعمال طلبة السنة الثالثة ليسانس (<span class="text-amber-400 font-extrabold text-base">L3</span>) — الفوج البيداغوجي الثاني (<span class="text-white font-bold">02</span>)، تحت إشراف نخبة أساتذة القسم.
             </p>
 
-            <!-- Quick Metadata Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto text-xs mb-10 text-right">
-                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
-                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-layer-group text-amber-400 me-1"></i> التخصص</span>
-                    <strong class="text-white text-sm font-extrabold">علوم مالية ومحاسبة</strong>
+            <div class="animate-hero-item delay-400 grid grid-cols-2 md:grid-cols-4 gap-3.5 max-w-3xl mx-auto text-xs mb-10 text-right">
+                <div class="bg-blue-900/60 backdrop-blur-xl p-4 rounded-2xl border border-blue-700/60 text-center shadow-lg transition-all duration-300">
+                    <span class="block text-blue-200 font-bold mb-1.5"><i class="fa-solid fa-layer-group text-amber-400 me-1.5"></i> التخصص</span>
+                    <strong class="text-white text-sm font-black">علوم مالية ومحاسبة</strong>
                 </div>
-                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
-                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-users text-emerald-400 me-1"></i> الفوج البيداغوجي</span>
-                    <strong class="text-white text-sm font-extrabold">الفوج الثاني (02)</strong>
+                <div class="bg-blue-900/60 backdrop-blur-xl p-4 rounded-2xl border border-blue-700/60 text-center shadow-lg transition-all duration-300">
+                    <span class="block text-blue-200 font-bold mb-1.5"><i class="fa-solid fa-users text-emerald-400 me-1.5"></i> الفوج البيداغوجي</span>
+                    <strong class="text-white text-sm font-black">الفوج الثاني (02)</strong>
                 </div>
-                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
-                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-graduation-cap text-sky-400 me-1"></i> المرحلة الدراسية</span>
-                    <strong class="text-white text-sm font-extrabold">السنة الثالثة ليسانس</strong>
+                <div class="bg-blue-900/60 backdrop-blur-xl p-4 rounded-2xl border border-blue-700/60 text-center shadow-lg transition-all duration-300">
+                    <span class="block text-blue-200 font-bold mb-1.5"><i class="fa-solid fa-graduation-cap text-sky-400 me-1.5"></i> المرحلة الدراسية</span>
+                    <strong class="text-white text-sm font-black">السنة الثالثة ليسانس</strong>
                 </div>
-                <div class="bg-blue-900/60 backdrop-blur-md p-3.5 rounded-2xl border border-blue-700/50 text-center shadow-sm">
-                    <span class="block text-blue-200 font-bold mb-1"><i class="fa-solid fa-calendar-days text-amber-400 me-1"></i> الدفعة</span>
-                    <strong class="text-white text-sm font-extrabold">2026 / 2027</strong>
+                <div class="bg-blue-900/60 backdrop-blur-xl p-4 rounded-2xl border border-blue-700/60 text-center shadow-lg transition-all duration-300">
+                    <span class="block text-blue-200 font-bold mb-1.5"><i class="fa-solid fa-calendar-days text-amber-400 me-1.5"></i> الدفعة</span>
+                    <strong class="text-white text-sm font-black">2026 / 2027</strong>
                 </div>
             </div>
 
-            <!-- Team Button Modal Trigger -->
-            <div class="flex justify-center">
-                <button onclick="openTeamModal()" class="inline-flex items-center gap-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-6 py-3 rounded-xl text-xs shadow-lg transition-all cursor-pointer hover:scale-105">
-                    <i class="fa-solid fa-id-badge text-sm"></i>
-                    <span>عرض قائمة أعضاء فريق العمل والطلبة وكذا الاساتذة المشرفين</span>
+            <div class="animate-hero-item delay-500 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="openTeamModal()" class="btn-shimmer inline-flex items-center justify-center text-center gap-3 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-7 py-4 rounded-2xl text-xs sm:text-sm shadow-xl shadow-amber-500/25 transition-all duration-300 cursor-pointer">
+                    <i class="fa-solid fa-id-badge text-base"></i>
+                    <span>عرض قائمة أعضاء فريق العمل والطلبة وكذا الأساتذة المشرفين</span>
                 </button>
             </div>
-
         </div>
     </header>
 
     <!-- ==========================================================================
        MAIN CONTENT AREA
        ========================================================================== -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 -mt-6 relative z-20 pb-16 flex-grow w-full space-y-6">
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 -mt-9 relative z-20 pb-20 flex-grow w-full space-y-6">
 
-        <!-- Controls Toolbar -->
-        <div class="academic-card p-4 sm:p-5 rounded-2xl bg-white shadow-xl space-y-4">
-            
-            <!-- Live Search Bar on Top -->
-            <div class="relative w-full">
-                <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input type="text" id="searchInput" onkeyup="filterResearch()" placeholder="بحث سريع في المقاييس، عناوين البحوث، أو الأساتذة المشرفين..." 
-                    class="w-full pl-4 pr-11 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/10 transition-all font-medium">
-            </div>
-
-            <!-- Horizontal Scroll Filter Pills Below Search -->
-            <div class="flex items-center gap-2.5 overflow-x-auto pb-1 flex-nowrap scroll-smooth no-scrollbar text-xs sm:text-sm">
-                <button onclick="setFilter('all')" id="btn-filter-all" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-extrabold transition-all cursor-pointer shadow-2xs">
-                    الكل (<span id="count-all">4</span>)
-                </button>
-                <button onclick="setFilter('pending')" id="btn-filter-pending" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
-                    قيد التحديث (<span id="count-pending">2</span>)
-                </button>
-                <button onclick="setFilter('ready')" id="btn-filter-ready" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
-                    جاهز للتحميل (<span id="count-ready">2</span>)
+        <div class="animate-hero-item delay-300 academic-card p-4 sm:p-5 rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl space-y-3.5 border border-slate-200/80">
+            <div class="relative w-full group">
+                <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 text-sm transition-colors"></i>
+                <input type="text" id="searchInput" onkeyup="filterResearch()" placeholder="بحث ذكي: اكتب اسم المقياس، عنوان البحث، أو اسم الأستاذ المشرف..." 
+                    class="w-full pl-10 pr-11 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 transition-all font-semibold shadow-inner">
+                <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-200 hover:bg-rose-500 hover:text-white text-slate-600 flex items-center justify-center text-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
+            <!-- Fixed Filter Buttons Grid to Prevent Wrapping and Overlap -->
+            <div class="grid grid-cols-3 gap-1.5 sm:flex sm:items-center sm:justify-between">
+                <div class="col-span-3 sm:col-auto grid grid-cols-3 gap-1.5 sm:flex sm:items-center sm:gap-2">
+                    <button onclick="setFilter('all')" id="btn-filter-all" class="px-2.5 sm:px-4 py-2 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-black text-xs transition-all duration-200 cursor-pointer shadow-xs active:scale-95 flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-border-all text-[11px]"></i> <span>الكل (<span id="count-all">4</span>)</span>
+                    </button>
+                    <button onclick="setFilter('pending')" id="btn-filter-pending" class="px-2.5 sm:px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold text-xs hover:bg-slate-50 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-clock text-amber-500 text-[11px]"></i> <span>قيد التحديث (<span id="count-pending">2</span>)</span>
+                    </button>
+                    <button onclick="setFilter('ready')" id="btn-filter-ready" class="px-2.5 sm:px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold text-xs hover:bg-slate-50 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> <span>جاهز (<span id="count-ready">2</span>)</span>
+                    </button>
+                </div>
+
+                <div class="col-span-3 sm:col-auto flex items-center justify-center sm:justify-end">
+                    <button onclick="toggleAllAccordions()" id="toggleAllBtn" class="w-full sm:w-auto text-xs font-bold text-slate-600 hover:text-blue-600 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-blue-50 border border-slate-200 transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs">
+                        <i class="fa-solid fa-angles-down text-blue-600 text-[11px]" id="toggleAllIcon"></i>
+                        <span id="toggleAllText">توسيع الكل</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 overflow-x-auto pt-2 pb-1 text-[11px] no-scrollbar border-t border-slate-100">
+                <span class="text-slate-400 font-bold shrink-0"><i class="fa-solid fa-tags me-1"></i> وسوم سريعة:</span>
+                <button onclick="quickTagSearch('قانون الشركات')" class="bg-slate-100 hover:bg-blue-100 hover:text-blue-800 text-slate-600 px-2.5 py-1 rounded-lg font-bold transition-colors cursor-pointer shrink-0">#قانون_الشركات</button>
+                <button onclick="quickTagSearch('نظرية المحاسبة')" class="bg-slate-100 hover:bg-indigo-100 hover:text-indigo-800 text-slate-600 px-2.5 py-1 rounded-lg font-bold transition-colors cursor-pointer shrink-0">#نظرية_المحاسبة</button>
+                <button onclick="quickTagSearch('محاسبة الشركات')" class="bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 text-slate-600 px-2.5 py-1 rounded-lg font-bold transition-colors cursor-pointer shrink-0">#محاسبة_الشركات</button>
+                <button onclick="quickTagSearch('التسيير المالي')" class="bg-slate-100 hover:bg-violet-100 hover:text-violet-800 text-slate-600 px-2.5 py-1 rounded-lg font-bold transition-colors cursor-pointer shrink-0">#التسيير_المالي</button>
+            </div>
         </div>
 
-        <!-- Section Header -->
-        <div class="flex items-center justify-between pb-2 border-b border-slate-200 pt-2">
-            <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-folder-open text-blue-600"></i>
-                مقررات وبحوث المقاييس الدراسية (اضغط على أي مقياس لعرض التفاصيل)
+        <div class="flex items-center justify-between pb-3 border-b border-slate-200 pt-2 gap-2 flex-wrap">
+            <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-sm shadow-sm shrink-0">
+                    <i class="fa-solid fa-folder-open"></i>
+                </span>
+                <span>مقررات وبحوث المقاييس الدراسية</span> <span class="hidden sm:inline text-xs font-semibold text-slate-400">(اضغط على أي مقياس لعرض التفاصيل الكاملة)</span>
             </h2>
-            <span class="text-xs font-bold text-slate-600 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-2xs">4 مقاييس</span>
+            <span id="visibleCountBadge" class="text-xs font-black text-blue-700 bg-blue-50 px-4 py-1.5 rounded-full border border-blue-200 shadow-2xs transition-all">4 مقاييس</span>
+        </div>
+
+        <div id="emptySearchState" class="hidden academic-card rounded-2xl p-12 text-center space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center text-2xl mx-auto shadow-inner">
+                <i class="fa-solid fa-face-frown"></i>
+            </div>
+            <h3 class="text-base font-black text-slate-800">لم يتم العثور على نتائج مطابقة لبحثك</h3>
+            <p class="text-xs text-slate-500 max-w-sm mx-auto">حاول التحقق من الكلمات المدخلة أو مسح البحث لعرض جميع مقاييس الدفعة الدراسية.</p>
+            <button onclick="clearSearch(); setFilter('all');" class="mt-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-md">
+                إعادة ضبط البحث والعرض
+            </button>
         </div>
 
         <!-- Research Modules Container -->
         <div class="space-y-4" id="modulesContainer">
 
-            <!-- MODULE 1: قانون الشركات (Excluded from DataShow note as requested) -->
-            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="قانون الشركات المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد">
+            <!-- MODULE 1: قانون الشركات -->
+            <div id="card-acc-1" class="module-card academic-card rounded-2xl overflow-hidden transition-all duration-300" data-status="pending" data-search="قانون الشركات المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد">
                 
-                <button onclick="toggleAccordion('acc-1')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-md shadow-blue-500/25 flex items-center justify-center text-xl font-bold border border-blue-400/30 group-hover:scale-105 transition-transform">
+                <button onclick="toggleAccordion('acc-1')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/50 transition-colors group">
+                    <div class="flex items-center gap-4 sm:gap-5">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-600 text-white shadow-md flex items-center justify-center text-xl font-bold group-hover:scale-105 transition-transform shrink-0">
                             <i class="fa-solid fa-scale-balanced"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-[10px] text-amber-700 font-black bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200 inline-flex items-center gap-1.5 shadow-2xs">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
+                                    قيد التحديث الإداري
+                                </span>
                             </div>
-                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: قانون الشركات</h3>
+                            <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-blue-700 transition-colors">مقياس: قانون الشركات</h3>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: د. بوستة محمد</span>
-                        <div id="icon-acc-1" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                        <span class="hidden md:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">الإشراف: د. بوستة محمد</span>
+                        <div id="icon-acc-1" class="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-blue-100 group-hover:text-blue-600 flex items-center justify-center text-slate-500 transition-all duration-300 shrink-0">
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </div>
                     </div>
                 </button>
 
-                <div id="acc-1" class="accordion-wrapper">
-                    <div>
-                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
-                            
-                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+                <div id="acc-1" class="accordion-content">
+                    <div class="p-5 sm:p-7 border-t border-slate-100 space-y-6 bg-slate-50/70">
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <span class="text-xs font-black text-blue-600 uppercase tracking-wider block mb-1">
                                     <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
                                 </span>
                                 <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
                                     المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد
                                 </h4>
                             </div>
+                            <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0">
+                                <i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي معتمد
+                            </span>
+                        </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
-                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق إعداد البحث:
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 space-y-3 shadow-2xs">
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                    <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                        <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق إعداد البحث:
+                                    </span>
+                                    <span class="text-[10px] bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-md font-black">3 طلبة</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
+                                        <span class="text-[10px] text-slate-600 bg-slate-200 px-2 py-0.5 rounded-md font-bold shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                        <span class="text-[10px] text-slate-600 bg-slate-200 px-2 py-0.5 rounded-md font-bold shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">مباركي منصور</span>
+                                        <span class="text-[10px] text-slate-600 bg-slate-200 px-2 py-0.5 rounded-md font-bold shrink-0">عضو</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 flex flex-col justify-between space-y-3 shadow-2xs">
+                                <div>
+                                    <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                        <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
                                         </span>
-                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">3 طلبة</span>
                                     </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                                            <div class="flex items-center gap-2.5">
-                                                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user text-[10px]"></i></div>
-                                                <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
-                                            </div>
-                                            <span class="text-[10px] text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded-md">عضو</span>
+                                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3.5">
+                                        <div class="w-11 h-11 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200 shadow-2xs shrink-0">
+                                            <i class="fa-solid fa-user-tie"></i>
                                         </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                                            <div class="flex items-center gap-2.5">
-                                                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user text-[10px]"></i></div>
-                                                <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
-                                            </div>
-                                            <span class="text-[10px] text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded-md">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                                            <div class="flex items-center gap-2.5">
-                                                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user text-[10px]"></i></div>
-                                                <span class="font-bold text-slate-800">مباركي منصور</span>
-                                            </div>
-                                            <span class="text-[10px] text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded-md">عضو</span>
+                                        <div>
+                                            <div class="font-black text-slate-900 text-sm">الدكتور بوستة محمد</div>
+                                            <div class="text-[11px] text-slate-500 font-semibold">أستاذ مقياس قانون الشركات</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
-                                    <div>
-                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
-                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
-                                            </span>
-                                        </div>
-                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
-                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
-                                                <i class="fa-solid fa-user-tie"></i>
-                                            </div>
-                                            <div>
-                                                <div class="font-black text-slate-900 text-sm">الدكتور بوستة محمد</div>
-                                                <div class="text-[11px] text-slate-500">أستاذ مقياس قانون الشركات</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
-                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
-                                    </div>
+                                <div class="text-[11px] text-amber-700 flex items-center gap-2 pt-2 font-bold bg-amber-50 p-3 rounded-xl border border-amber-200">
+                                    <i class="fa-solid fa-clock text-amber-500 text-sm shrink-0"></i>
+                                    <span>الملف قيد المراجعة النهائية والرفع قريباً</span>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="pt-2">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
-                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل:
-                                </span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                    <a href="#" onclick="showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
-                                    </a>
-                                    <a href="#" onclick="showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-word"></i> تحميل Word
-                                    </a>
-                                    <a href="#" onclick="showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
-                                    </a>
-                                </div>
+                        <div class="pt-2">
+                            <span class="text-xs font-black text-slate-500 uppercase tracking-wider block mb-3">
+                                <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والمعاينة:
+                            </span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-rose-600/15 transition-all cursor-pointer text-center">
+                                    <i class="fa-solid fa-file-pdf text-sm"></i> تحميل PDF
+                                </a>
+                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-blue-600/15 transition-all cursor-pointer text-center">
+                                    <i class="fa-solid fa-file-word text-sm"></i> تحميل Word
+                                </a>
+                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد التحديث والإعداد قريباً')" class="flex items-center justify-center gap-2.5 bg-orange-600 hover:bg-orange-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-orange-600/15 transition-all cursor-pointer text-center">
+                                    <i class="fa-solid fa-file-powerpoint text-sm"></i> عرض PowerPoint
+                                </a>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- MODULE 2: نظرية المحاسبة (Updated to READY with direct PDF & Word links + DataShow Note) -->
-            <div class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200" data-status="ready" data-search="نظرية المحاسبة موقع النظام المحاسبي المالي من نظرية المحاسبة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوزيدي نصر الله حمادة محمد صادق فاروق">
+            <!-- MODULE 2: نظرية المحاسبة -->
+            <div id="card-acc-2" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="نظرية المحاسبة موقع النظام المحاسبي المالي من نظرية المحاسبة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوزيدي نصر الله حمادة محمد صادق فاروق">
                 
-                <button onclick="toggleAccordion('acc-2')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-md shadow-indigo-500/25 flex items-center justify-center text-xl font-bold border border-indigo-400/30 group-hover:scale-105 transition-transform">
+                <button onclick="toggleAccordion('acc-2')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
+                    <div class="flex items-center gap-4 sm:gap-5">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white shadow-md flex items-center justify-center text-xl font-bold group-hover:scale-105 transition-transform shrink-0">
                             <i class="fa-solid fa-book-bookmark"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1"><i class="fa-solid fa-circle-check text-[8px]"></i> جاهز للتحميل</span>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    جاهز للتحميل الفوري
+                                </span>
                             </div>
-                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: نظرية المحاسبة</h3>
+                            <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-indigo-700 transition-colors">مقياس: نظرية المحاسبة</h3>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: أ. صادق فاروق</span>
-                        <div id="icon-acc-2" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                        <span class="hidden md:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">الإشراف: أ. صادق فاروق</span>
+                        <div id="icon-acc-2" class="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-indigo-100 group-hover:text-indigo-600 flex items-center justify-center text-slate-500 transition-all duration-300 shrink-0">
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </div>
                     </div>
                 </button>
 
-                <div id="acc-2" class="accordion-wrapper">
-                    <div>
-                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
-                            
-                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-1">
+                <div id="acc-2" class="accordion-content">
+                    <div class="p-5 sm:p-7 border-t border-slate-100 space-y-6 bg-slate-50/70">
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <span class="text-xs font-black text-emerald-600 uppercase tracking-wider block mb-1">
                                     <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
                                 </span>
                                 <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
                                     موقع النظام المحاسبي المالي من نظرية المحاسبة
                                 </h4>
                             </div>
+                            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
+                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> بحث مكتمل وموثق
+                            </span>
+                        </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
-                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="fa-solid fa-users-line text-indigo-600"></i> أعضاء فريق العمل:
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 space-y-3 shadow-2xs">
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                    <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                        <i class="fa-solid fa-users-line text-indigo-600"></i> أعضاء فريق العمل:
+                                    </span>
+                                    <span class="text-[10px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-md font-black">5 طلبة</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">مباركي منصور</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بوزيدان نصر الله</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">حمادة محمد</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 flex flex-col justify-between space-y-3 shadow-2xs">
+                                <div>
+                                    <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                        <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-chalkboard-user text-indigo-600"></i> المشرف الأكاديمي:
                                         </span>
-                                        <span class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
                                     </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
+                                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3.5">
+                                        <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-base border border-indigo-200 shadow-2xs shrink-0">
+                                            <i class="fa-solid fa-user-tie"></i>
                                         </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">مباركي منصور</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بوزيدان نصر الله</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">حمادة محمد</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
+                                        <div>
+                                            <div class="font-black text-slate-900 text-sm">الأستاذ صادق فاروق</div>
+                                            <div class="text-[11px] text-slate-500 font-semibold">أستاذ مقياس نظرية المحاسبة</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
-                                    <div>
-                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
-                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                                <i class="fa-solid fa-chalkboard-user text-indigo-600"></i> المشرف الأكاديمي:
-                                            </span>
-                                        </div>
-                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
-                                            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-base border border-indigo-200">
-                                                <i class="fa-solid fa-user-tie"></i>
-                                            </div>
-                                            <div>
-                                                <div class="font-black text-slate-900 text-sm">الأستاذ صادق فاروق</div>
-                                                <div class="text-[11px] text-slate-500">أستاذ مقياس نظرية المحاسبة</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-[11px] text-emerald-700 flex items-center gap-1.5 pt-2 font-bold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
-                                        <i class="fa-solid fa-circle-check"></i> البحث مكتمل وجاهز للتحميل المباشر
-                                    </div>
+                                <div class="text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                                    <i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i>
+                                    <span>البحث مكتمل وجاهز للتحميل المباشر</span>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="pt-2 space-y-3">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-                                    <i class="fa-solid fa-box-archive me-1 text-indigo-600"></i> خيارات التحميل والملفات:
-                                </span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                    <a href="https://bosfiles.net/download/Hwi371iqAr3T9-7NR_O5lQ" target="_blank" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-md transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-download"></i> تحميل PDF (مباشر)
-                                    </a>
-                                    <a href="https://bosfiles.net/download/doDvhM9NbLrukbY5Y5_eaw" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-md transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-word"></i> تحميل Word (مباشر)
-                                    </a>
-                                    <a href="#" onclick="showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
-                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint (غير متوفر)
-                                    </a>
-                                </div>
-                                <!-- DataShow Note as requested -->
-                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-[11px] font-bold flex items-center gap-2">
-                                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm"></i>
-                                    <span>ملاحظة: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
-                                </div>
+                        <div class="pt-2 space-y-3">
+                            <span class="text-xs font-black text-slate-500 uppercase tracking-wider block">
+                                <i class="fa-solid fa-box-archive me-1 text-indigo-600"></i> خيارات التحميل والملفات:
+                            </span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <a href="https://bosfiles.net/download/Hwi371iqAr3T9-7NR_O5lQ" download="موقع_النظام_المحاسبي_المالي_من_نظرية_المحاسبة.pdf" target="_blank" class="btn-shimmer flex items-center justify-center text-center gap-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-emerald-600/20 transition-all cursor-pointer">
+                                    <i class="fa-solid fa-download text-sm"></i> تحميل PDF (مباشر)
+                                </a>
+                                <a href="https://bosfiles.net/download/doDvhM9NbLrukbY5Y5_eaw" download="موقع_النظام_المحاسبي_المالي_من_نظرية_المحاسبة.docx" target="_blank" class="btn-shimmer flex items-center justify-center text-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-blue-600/20 transition-all cursor-pointer">
+                                    <i class="fa-solid fa-file-word text-sm"></i> تحميل Word (مباشر)
+                                </a>
+                                <a href="#" onclick="event.preventDefault(); showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center text-center gap-2.5 bg-orange-600 hover:bg-orange-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all opacity-60 cursor-pointer">
+                                    <i class="fa-solid fa-file-powerpoint text-sm"></i> عرض PowerPoint (غير متوفر)
+                                </a>
                             </div>
-
+                            <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base shrink-0"></i>
+                                <span>ملاحظة إدارية: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- MODULE 3: محاسبة الشركات (Ready with DataShow Note) -->
-            <div class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200" data-status="ready" data-search="محاسبة الشركات المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف كرفيس فاطمة">
+            <!-- MODULE 3: محاسبة الشركات -->
+            <div id="card-acc-3" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="محاسبة الشركات المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف كرفيس فاطمة">
                 
-                <button onclick="toggleAccordion('acc-3')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-500/25 flex items-center justify-center text-xl font-bold border border-emerald-400/30 group-hover:scale-105 transition-transform">
+                <button onclick="toggleAccordion('acc-3')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
+                    <div class="flex items-center gap-4 sm:gap-5">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-600 text-white shadow-md flex items-center justify-center text-xl font-bold group-hover:scale-105 transition-transform shrink-0">
                             <i class="fa-solid fa-calculator"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1"><i class="fa-solid fa-circle-check text-[8px]"></i> جاهز للتحميل - تم عرض البحث</span>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    جاهز للتحميل - تم عرض البحث
+                                </span>
                             </div>
-                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: محاسبة الشركات</h3>
+                            <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-emerald-700 transition-colors">مقياس: محاسبة الشركات</h3>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: أ. كرفيس فاطمة</span>
-                        <div id="icon-acc-3" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                        <span class="hidden md:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">الإشراف: أ. كرفيس فاطمة</span>
+                        <div id="icon-acc-3" class="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-emerald-100 group-hover:text-emerald-600 flex items-center justify-center text-slate-500 transition-all duration-300 shrink-0">
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </div>
                     </div>
                 </button>
 
-                <div id="acc-3" class="accordion-wrapper">
-                    <div>
-                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
-                            
-                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-1">
+                <div id="acc-3" class="accordion-content">
+                    <div class="p-5 sm:p-7 border-t border-slate-100 space-y-6 bg-slate-50/70">
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <span class="text-xs font-black text-emerald-600 uppercase tracking-wider block mb-1">
                                     <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
                                 </span>
                                 <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
                                     المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة
                                 </h4>
                             </div>
+                            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
+                                <i class="fa-solid fa-presentation-screen text-emerald-600 me-1"></i> تم المناقشة بنجاح
+                            </span>
+                        </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                                
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
-                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="fa-solid fa-users-line text-emerald-600"></i> أعضاء فريق إعداد البحث:
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 space-y-3 shadow-2xs">
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                    <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                        <i class="fa-solid fa-users-line text-emerald-600"></i> أعضاء فريق إعداد البحث:
+                                    </span>
+                                    <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-md font-black">5 طلبة</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">مباركي منصور</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">برنو عبد النور</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بن عباس يوسف</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 flex flex-col justify-between space-y-3 shadow-2xs">
+                                <div>
+                                    <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                        <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-chalkboard-user text-emerald-600"></i> المشرف الأكاديمي:
                                         </span>
-                                        <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
                                     </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
+                                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3.5">
+                                        <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-base border border-emerald-200 shadow-2xs shrink-0">
+                                            <i class="fa-solid fa-user-tie"></i>
                                         </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">مباركي منصور</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">برنو عبد النور</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بن عباس يوسف</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
+                                        <div>
+                                            <div class="font-black text-slate-900 text-sm">الأستاذة كرفيس فاطمة</div>
+                                            <div class="text-[11px] text-slate-500 font-semibold">أستاذة مقياس محاسبة الشركات</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
-                                    <div>
-                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
-                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                                <i class="fa-solid fa-chalkboard-user text-emerald-600"></i> المشرف الأكاديمي:
-                                            </span>
-                                        </div>
-                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
-                                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-base border border-emerald-200">
-                                                <i class="fa-solid fa-user-tie"></i>
-                                            </div>
-                                            <div>
-                                                <div class="font-black text-slate-900 text-sm">الأستاذة كرفيس فاطمة</div>
-                                                <div class="text-[11px] text-slate-500">أستاذة مقياس محاسبة الشركات</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-[11px] text-emerald-700 flex items-center gap-1.5 pt-2 font-bold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
-                                        <i class="fa-solid fa-circle-check"></i> تم عرض البحث وهو جاهز للتحميل
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="pt-2 space-y-3">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-                                    <i class="fa-solid fa-box-archive me-1 text-emerald-600"></i> خيارات التحميل والملفات:
-                                </span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                    <a href="https://bosfiles.net/download/Wm9-ddb-jGNLMdGRZoxoqg" target="_blank" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-md transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-download"></i> تحميل PDF (مباشر)
-                                    </a>
-                                    <a href="#" onclick="showToast('الملف قيد التحديث والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
-                                        <i class="fa-solid fa-file-word"></i> تحميل Word (غير جاهز) 
-                                    </a>
-                                    <a href="#" onclick="showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
-                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint (غير متوفر) 
-                                    </a>
-                                </div>
-                                <!-- DataShow Note as requested -->
-                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-[11px] font-bold flex items-center gap-2">
-                                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm"></i>
-                                    <span>ملاحظة: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
+                                <div class="text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                                    <i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i>
+                                    <span>تم عرض البحث وهو جاهز للتحميل</span>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="pt-2 space-y-3">
+                            <span class="text-xs font-black text-slate-500 uppercase tracking-wider block">
+                                <i class="fa-solid fa-box-archive me-1 text-emerald-600"></i> خيارات التحميل والملفات:
+                            </span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <a href="https://bosfiles.net/download/Wm9-ddb-jGNLMdGRZoxoqg" download="المعالجة_المحاسبية_للخسائر_وأثرها_على_الوضعية_المالية.pdf" target="_blank" class="btn-shimmer flex items-center justify-center text-center gap-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-emerald-600/20 transition-all cursor-pointer">
+                                    <i class="fa-solid fa-download text-sm"></i> تحميل PDF (مباشر)
+                                </a>
+                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد التحديث والرفع قريباً')" class="flex items-center justify-center text-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all opacity-60 cursor-pointer">
+                                    <i class="fa-solid fa-file-word text-sm"></i> تحميل Word (قريباً) 
+                                </a>
+                                <a href="#" onclick="event.preventDefault(); showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center text-center gap-2.5 bg-orange-600 hover:bg-orange-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all opacity-60 cursor-pointer">
+                                    <i class="fa-solid fa-file-powerpoint text-sm"></i> عرض PowerPoint (غير متوفر) 
+                                </a>
+                            </div>
+                            <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base shrink-0"></i>
+                                <span>ملاحظة إدارية: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- MODULE 4: التسيير المالي (Pending with DataShow Note) -->
-            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="التسيير المالي تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
+            <!-- MODULE 4: التسيير المالي -->
+            <div id="card-acc-4" class="module-card academic-card rounded-2xl overflow-hidden transition-all duration-300" data-status="pending" data-search="التسيير المالي تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
                 
-                <button onclick="toggleAccordion('acc-4')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-700 text-white shadow-md shadow-violet-500/25 flex items-center justify-center text-xl font-bold border border-violet-400/30 group-hover:scale-105 transition-transform">
+                <button onclick="toggleAccordion('acc-4')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                    <div class="flex items-center gap-4 sm:gap-5">
+                        <div class="w-14 h-14 rounded-2xl bg-violet-600 text-white shadow-md flex items-center justify-center text-xl font-bold group-hover:scale-105 transition-transform shrink-0">
                             <i class="fa-solid fa-chart-pie"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-[10px] text-amber-700 font-black bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200 inline-flex items-center gap-1.5 shadow-2xs">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
+                                    قيد التحديث الإداري
+                                </span>
                             </div>
-                            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: التسيير المالي</h3>
+                            <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-violet-700 transition-colors">مقياس: التسيير المالي</h3>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="hidden sm:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200">الإشراف: أ. قاسمي عبد الكريم</span>
-                        <div id="icon-acc-4" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-300">
+                        <span class="hidden md:inline-block text-xs font-bold text-slate-600 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">الإشراف: أ. قاسمي عبد الكريم</span>
+                        <div id="icon-acc-4" class="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-violet-100 group-hover:text-violet-600 flex items-center justify-center text-slate-500 transition-all duration-300 shrink-0">
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </div>
                     </div>
                 </button>
 
-                <div id="acc-4" class="accordion-wrapper">
-                    <div>
-                        <div class="p-5 sm:p-6 border-t border-slate-100 space-y-5 bg-slate-50/50">
-                            
-                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+                <div id="acc-4" class="accordion-content">
+                    <div class="p-5 sm:p-7 border-t border-slate-100 space-y-6 bg-slate-50/70">
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <span class="text-xs font-black text-blue-600 uppercase tracking-wider block mb-1">
                                     <i class="fa-solid fa-bookmark me-1"></i> عنوان البحث الجامعي:
                                 </span>
                                 <h4 class="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
                                     تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل
                                 </h4>
                             </div>
+                            <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0">
+                                <i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي قيد الإعداد
+                            </span>
+                        </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                                
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
-                                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                                        <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق إعداد البحث:
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 space-y-3 shadow-2xs">
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                    <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                        <i class="fa-solid fa-users-line text-blue-600"></i> أعضاء فريق إعداد البحث:
+                                    </span>
+                                    <span class="text-[10px] bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-md font-black">5 طلبة</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">مباركي منصور</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">برنو عبد النور</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 gap-2">
+                                        <span class="font-bold text-slate-800">بن عباس يوسف</span>
+                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-200 px-2 py-0.5 rounded-md shrink-0">عضو</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4.5 rounded-2xl bg-white border border-slate-200/80 flex flex-col justify-between space-y-3 shadow-2xs">
+                                <div>
+                                    <div class="border-b border-slate-100 pb-2.5 mb-3">
+                                        <span class="font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
                                         </span>
-                                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">5 طلبة</span>
                                     </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بصري خالد ابو الوليد</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
+                                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3.5">
+                                        <div class="w-11 h-11 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200 shadow-2xs shrink-0">
+                                            <i class="fa-solid fa-user-tie"></i>
                                         </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بوشحي شيخ البشير</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">مباركي منصور</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">برنو عبد النور</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
-                                            <span class="font-bold text-slate-800">بن عباس يوسف</span>
-                                            <span class="text-[10px] text-slate-500">عضو</span>
+                                        <div>
+                                            <div class="font-black text-slate-900 text-sm">الأستاذ قاسمي عبد الكريم</div>
+                                            <div class="text-[11px] text-slate-500 font-semibold">أستاذ مقياس التسيير المالي</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col justify-between space-y-3 shadow-2xs">
-                                    <div>
-                                        <div class="border-b border-slate-100 pb-2.5 mb-3">
-                                            <span class="font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                                <i class="fa-solid fa-chalkboard-user text-blue-600"></i> المشرف الأكاديمي:
-                                            </span>
-                                        </div>
-                                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
-                                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base border border-blue-200">
-                                                <i class="fa-solid fa-user-tie"></i>
-                                            </div>
-                                            <div>
-                                                <div class="font-black text-slate-900 text-sm">الأستاذ قاسمي عبد الكريم</div>
-                                                <div class="text-[11px] text-slate-500">أستاذ مقياس التسيير المالي</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
-                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="pt-2 space-y-3">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-                                    <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
-                                </span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-pdf"></i> تحميل PDF
-                                    </a>
-                                    <a href="#" onclick="showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5">
-                                        <i class="fa-solid fa-file-word"></i> تحميل Word
-                                    </a>
-                                    <a href="#" onclick="showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-xs transition-transform hover:-translate-y-0.5 opacity-60">
-                                        <i class="fa-solid fa-file-powerpoint"></i> عرض PowerPoint
-                                    </a>
-                                </div>
-                                <!-- DataShow Note as requested -->
-                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-[11px] font-bold flex items-center gap-2">
-                                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm"></i>
-                                    <span>ملاحظة: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
+                                <div class="text-[11px] text-amber-700 flex items-center gap-2 pt-2 font-bold bg-amber-50 p-3 rounded-xl border border-amber-200">
+                                    <i class="fa-solid fa-clock text-amber-500 text-sm shrink-0"></i>
+                                    <span>الملف قيد التحديث والرفع قريباً</span>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="pt-2 space-y-3">
+                            <span class="text-xs font-black text-slate-500 uppercase tracking-wider block">
+                                <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
+                            </span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center text-center gap-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all cursor-pointer">
+                                    <i class="fa-solid fa-file-pdf text-sm"></i> تحميل PDF
+                                </a>
+                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center text-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all cursor-pointer">
+                                    <i class="fa-solid fa-file-word text-sm"></i> تحميل Word
+                                </a>
+                                <a href="#" onclick="event.preventDefault(); showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center text-center gap-2.5 bg-orange-600 hover:bg-orange-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all opacity-60 cursor-pointer">
+                                    <i class="fa-solid fa-file-powerpoint text-sm"></i> عرض PowerPoint
+                                </a>
+                            </div>
+                            <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base shrink-0"></i>
+                                <span>ملاحظة إدارية: لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -691,104 +809,141 @@
             </div>
 
         </div>
-
     </main>
 
+    <!-- Back To Top Floating Button -->
+    <button id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="العودة للأعلى" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-2xl bg-blue-950 hover:bg-blue-800 text-amber-400 border border-blue-800 shadow-2xl flex items-center justify-center translate-y-24 opacity-0 pointer-events-none transition-all duration-400 cursor-pointer hover:scale-110 active:scale-95">
+        <i class="fa-solid fa-arrow-up text-base"></i>
+    </button>
+
     <!-- ==========================================================================
-       MODAL: TEAM & PROFESSORS TOGGLE MODAL
+       MODAL: TEAM & PROFESSORS COMPACT MODAL
        ========================================================================== -->
-    <div id="teamModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
-            <div class="p-5 bg-blue-950 text-white flex justify-between items-center shrink-0">
+    <div id="teamModal" onclick="if(event.target === this) closeTeamModal()" class="modal-backdrop fixed inset-0 z-50 hidden flex items-center justify-center p-3 bg-slate-900/80 backdrop-blur-md">
+        <div class="modal-box bg-white w-full max-w-md rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200">
+            <div class="p-4 bg-blue-950 text-white flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center">
+                    <div class="w-9 h-9 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center text-base shadow-inner shrink-0">
                         <i class="fa-solid fa-users-gear"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base">دليل الجامعة والطلبة</h3>
-                        <p class="text-xs text-blue-200">السنة الثالثة ليسانس محاسبة ومالية - الفوج 02</p>
+                        <h3 class="font-black text-sm sm:text-base">دليل الجامعة والطلبة</h3>
+                        <p class="text-[11px] text-blue-200">السنة الثالثة ليسانس محاسبة - الفوج 02</p>
                     </div>
                 </div>
-                <button onclick="closeTeamModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center transition-colors cursor-pointer">
+                <button onclick="closeTeamModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-600 hover:rotate-90 text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xs shrink-0 text-xs">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             
-            <div class="p-4 bg-slate-100 border-b border-slate-200 flex gap-2">
-                <button onclick="switchModalTab('students')" id="tab-students" class="flex-1 py-2.5 px-3 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-blue-600 text-white shadow-xs transition-all cursor-pointer">
-                    <i class="fa-solid fa-users text-amber-300"></i> قائمة الطلبة وفريق العمل
+            <div class="p-2.5 bg-slate-100 border-b border-slate-200 flex gap-1.5">
+                <button onclick="switchModalTab('students')" id="tab-students" class="flex-1 py-2 px-3 rounded-xl font-black text-xs flex items-center justify-center gap-1.5 bg-blue-600 text-white shadow-2xs transition-all cursor-pointer text-center">
+                    <i class="fa-solid fa-users text-amber-300 text-xs"></i> قائمة الطلبة والفريق
                 </button>
-                <button onclick="switchModalTab('professors')" id="tab-professors" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer">
-                    <i class="fa-solid fa-chalkboard-user text-blue-600"></i> قائمة الأساتذة والمقاييس
+                <button onclick="switchModalTab('professors')" id="tab-professors" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer text-center">
+                    <i class="fa-solid fa-chalkboard-user text-blue-600 text-xs"></i> الأساتذة والمقاييس
                 </button>
             </div>
 
-            <div class="p-5 text-sm text-slate-700">
+            <div class="p-4 text-xs text-slate-700 max-h-[55vh] overflow-y-auto space-y-3">
                 
-                <div id="panel-students" class="space-y-3">
-                    <div class="space-y-2">
-                        <span class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider block">أعضاء الفريق والطلبة:</span>
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> بصري خالد ابو الوليد
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> بوشحي شيخ البشير
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> مباركي منصور
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> برنو عبد النور
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> بن عباس يوسف
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> بوزيدان نصر الله
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-blue-600 text-[10px]"></i> حمادة محمد
-                            </div>
+                <!-- Students Panel -->
+                <div id="panel-students" class="space-y-3 transition-opacity duration-300">
+                    <div class="flex items-center justify-between bg-blue-50/70 p-3 rounded-xl border border-blue-100 gap-2">
+                        <span class="font-black text-blue-900 flex items-center gap-1.5 text-xs">
+                            <i class="fa-solid fa-id-card-clip text-blue-600 text-sm shrink-0"></i> أعضاء الفريق والطلبة (الفوج 02):
+                        </span>
+                        <span class="text-[10px] bg-blue-600 text-white font-black px-2.5 py-0.5 rounded-full shadow-2xs shrink-0">7 أعضاء</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-2">
+                        <div class="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs flex items-center gap-3 transition-all">
+                            <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-[11px] font-black shrink-0 shadow-2xs">01</div>
+                            <span class="font-extrabold text-slate-900 text-xs">بصري خالد ابو الوليد</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs flex items-center gap-3 transition-all">
+                            <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-black shrink-0">02</div>
+                            <span class="font-bold text-slate-800 text-xs">بوشحي شيخ البشير</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs flex items-center gap-3 transition-all">
+                            <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-black shrink-0">03</div>
+                            <span class="font-bold text-slate-800 text-xs">مباركي منصور</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs flex items-center gap-3 transition-all">
+                            <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-black shrink-0">04</div>
+                            <span class="font-bold text-slate-800 text-xs">برنو عبد النور</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs flex items-center gap-3 transition-all">
+                            <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-black shrink-0">05</div>
+                            <span class="font-bold text-slate-800 text-xs">بن عباس يوسف</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs flex items-center gap-3 transition-all">
+                            <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-black shrink-0">06</div>
+                            <span class="font-bold text-slate-800 text-xs">بوزيدان نصر الله</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs flex items-center gap-3 transition-all">
+                            <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-black shrink-0">07</div>
+                            <span class="font-bold text-slate-800 text-xs">حمادة محمد</span>
                         </div>
                     </div>
                 </div>
 
-                <div id="panel-professors" class="space-y-2.5 hidden text-xs">
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-user-tie text-blue-600"></i>
-                            <span class="font-extrabold text-slate-900">الدكتور بوستة محمد</span>
-                        </div>
-                        <span class="font-bold text-blue-700 bg-blue-100/60 px-2.5 py-1 rounded-lg">قانون الشركات</span>
+                <!-- Professors Panel -->
+                <div id="panel-professors" class="space-y-3 hidden transition-opacity duration-300">
+                    <div class="flex items-center justify-between bg-indigo-50/70 p-3 rounded-xl border border-indigo-100 gap-2">
+                        <span class="font-black text-indigo-950 flex items-center gap-1.5 text-xs">
+                            <i class="fa-solid fa-chalkboard-user text-indigo-600 text-sm shrink-0"></i> أساتذة المقاييس والإشراف:
+                        </span>
+                        <span class="text-[10px] bg-indigo-600 text-white font-black px-2.5 py-0.5 rounded-full shadow-2xs shrink-0">4 أساتذة</span>
                     </div>
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-user-tie text-indigo-600"></i>
-                            <span class="font-extrabold text-slate-900">الأستاذ صادق فاروق</span>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs transition-all gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shadow-2xs shrink-0">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <span class="font-extrabold text-slate-900 text-xs">الدكتور بوستة محمد</span>
+                            </div>
+                            <span class="font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg text-[11px] border border-blue-200 shrink-0 text-center">قانون الشركات</span>
                         </div>
-                        <span class="font-bold text-indigo-700 bg-indigo-100/60 px-2.5 py-1 rounded-lg">نظرية المحاسبة</span>
-                    </div>
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-user-tie text-emerald-600"></i>
-                            <span class="font-extrabold text-slate-900">الأستاذة كرفيس فاطمة</span>
+
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs transition-all gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold shadow-2xs shrink-0">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <span class="font-extrabold text-slate-900 text-xs">الأستاذ صادق فاروق</span>
+                            </div>
+                            <span class="font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg text-[11px] border border-indigo-200 shrink-0 text-center">نظرية المحاسبة</span>
                         </div>
-                        <span class="font-bold text-emerald-700 bg-emerald-100/60 px-2.5 py-1 rounded-lg">محاسبة الشركات</span>
-                    </div>
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-user-tie text-violet-600"></i>
-                            <span class="font-extrabold text-slate-900">الأستاذ قاسمي عبد الكريم</span>
+
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs transition-all gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold shadow-2xs shrink-0">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <span class="font-extrabold text-slate-900 text-xs">الأستاذة كرفيس فاطمة</span>
+                            </div>
+                            <span class="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg text-[11px] border border-emerald-200 shrink-0 text-center">محاسبة الشركات</span>
                         </div>
-                        <span class="font-bold text-violet-700 bg-violet-100/60 px-2.5 py-1 rounded-lg">التسيير المالي</span>
+
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs transition-all gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center text-xs font-bold shadow-2xs shrink-0">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <span class="font-extrabold text-slate-900 text-xs">الأستاذ قاسمي عبد الكريم</span>
+                            </div>
+                            <span class="font-bold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-lg text-[11px] border border-violet-200 shrink-0 text-center">التسيير المالي</span>
+                        </div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="p-4 bg-slate-50 border-t border-slate-200 text-center shrink-0">
-                <button onclick="closeTeamModal()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all cursor-pointer text-xs shadow-2xs">إغلاق النافذة</button>
+            <div class="p-3 bg-slate-50 border-t border-slate-200 text-center shrink-0">
+                <button onclick="closeTeamModal()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold rounded-xl transition-all cursor-pointer text-xs shadow-sm">إغلاق</button>
             </div>
         </div>
     </div>
@@ -796,25 +951,21 @@
     <!-- ==========================================================================
        FOOTER SECTION
        ========================================================================== -->
-    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-10 px-4 mt-16">
-        <div class="max-w-5xl mx-auto text-center space-y-4">
-            
-            <div class="inline-flex items-center gap-2 text-xs font-bold text-slate-300 bg-slate-800 px-4 py-1.5 rounded-full border border-slate-700">
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-12 px-4 mt-20 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center space-y-5 relative z-10">
+            <div class="inline-flex items-center justify-center text-center gap-2.5 text-xs font-bold text-slate-300 bg-slate-800/90 px-5 py-2 rounded-full border border-slate-700 shadow-sm">
                 <i class="fa-solid fa-university text-blue-400"></i>
-                جامعة صالحي أحمد بالنعامة — كلية العلوم الاقتصادية والتجارية وعلوم التسيير
+                <span>جامعة صالحي أحمد بالنعامة — كلية العلوم الاقتصادية والتجارية وعلوم التسيير</span>
             </div>
-
             <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
                 جميع الحقوق محفوظة © 2026 / 2027 لطلبة الدفعة الثالثة ليسانس محاسبة ومالية. إعداد وتطوير المنصة بواسطة الطلبة.
             </p>
-
             <div class="pt-2">
-                <a href="mailto:khaled.basri745@gmail.com" class="inline-flex items-center gap-2.5 bg-slate-800 hover:bg-slate-700 text-blue-300 hover:text-white px-5 py-2.5 rounded-xl text-xs font-bold border border-slate-700 transition-all shadow-md">
-                    <i class="fa-regular fa-envelope text-blue-400 text-base"></i>
+                <a href="mailto:khaled.basri745@gmail.com" class="inline-flex items-center justify-center text-center gap-2.5 bg-slate-800 hover:bg-slate-700 text-blue-300 hover:text-white px-6 py-3 rounded-2xl text-xs font-bold border border-slate-700 transition-all">
+                    <i class="regular fa-envelope text-blue-400 text-base"></i>
                     <span>khaled.basri745@gmail.com</span>
                 </a>
             </div>
-
         </div>
     </footer>
 
@@ -822,75 +973,176 @@
        JAVASCRIPT LOGIC ENGINE
        ========================================================================== -->
     <script>
-        // Toast Notification
-        function showToast(message) {
+        let currentFilter = 'all';
+        let toastTimeout;
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+
+            const backBtn = document.getElementById('backToTopBtn');
+            if (winScroll > 250) {
+                backBtn.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            } else {
+                backBtn.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }
+        });
+
+        function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').innerText = message;
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
+            const icon = document.getElementById('toastIcon');
+            const iconContainer = document.getElementById('toastIconContainer');
+
+            if (type === 'success') {
+                icon.className = 'fa-solid fa-circle-check text-emerald-400 text-base';
+                iconContainer.className = 'w-8 h-8 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0';
+            } else {
+                icon.className = 'fa-solid fa-circle-info text-amber-400 text-base';
+                iconContainer.className = 'w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0';
+            }
+            
+            clearTimeout(toastTimeout);
+            toast.classList.remove('translate-y-28', 'opacity-0', 'scale-95');
+            toast.classList.add('scale-100');
+
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-28', 'opacity-0', 'scale-95');
+                toast.classList.remove('scale-100');
             }, 3500);
         }
 
-        // Accordion Toggle
+        function quickTagSearch(tagName) {
+            document.getElementById('searchInput').value = tagName;
+            applyFilters();
+            showToast(`تم تطبيق البحث السريع عن: #${tagName}`, 'success');
+        }
+
         function toggleAccordion(id) {
             const target = document.getElementById(id);
             const icon = document.getElementById('icon-' + id);
+            const card = document.getElementById('card-' + id);
             const isExpanded = target.classList.contains('expanded');
 
-            document.querySelectorAll('.accordion-wrapper').forEach(acc => {
+            document.querySelectorAll('.accordion-content').forEach(acc => {
                 acc.classList.remove('expanded');
             });
             document.querySelectorAll('[id^="icon-acc-"]').forEach(ic => {
                 ic.style.transform = 'rotate(0deg)';
             });
+            document.querySelectorAll('.module-card').forEach(c => {
+                c.classList.remove('active-card');
+            });
 
             if (!isExpanded) {
                 target.classList.add('expanded');
                 icon.style.transform = 'rotate(180deg)';
+                if (card) card.classList.add('active-card');
+            }
+            updateExpandAllButtonState();
+        }
+
+        function toggleAllAccordions() {
+            const contents = document.querySelectorAll('.accordion-content');
+            const anyClosed = Array.from(contents).some(c => !c.classList.contains('expanded'));
+
+            contents.forEach(c => {
+                const id = c.id;
+                const icon = document.getElementById('icon-' + id);
+                const card = document.getElementById('card-' + id);
+                if (anyClosed) {
+                    c.classList.add('expanded');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                    if (card) card.classList.add('active-card');
+                } else {
+                    c.classList.remove('expanded');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                    if (card) card.classList.remove('active-card');
+                }
+            });
+            updateExpandAllButtonState();
+        }
+
+        function updateExpandAllButtonState() {
+            const contents = document.querySelectorAll('.accordion-content');
+            const allOpen = Array.from(contents).every(c => c.classList.contains('expanded'));
+            const icon = document.getElementById('toggleAllIcon');
+            const text = document.getElementById('toggleAllText');
+
+            if (allOpen) {
+                icon.className = 'fa-solid fa-angles-up text-blue-600';
+                text.innerText = 'طي الكل';
+            } else {
+                icon.className = 'fa-solid fa-angles-down text-blue-600';
+                text.innerText = 'توسيع الكل';
             }
         }
 
-        // Live Search
-        function filterResearch() {
+        function applyFilters() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const clearBtn = document.getElementById('clearSearchBtn');
             const cards = document.querySelectorAll('.module-card');
+            let visibleCount = 0;
+
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
 
             cards.forEach(card => {
                 const searchData = card.getAttribute('data-search').toLowerCase();
-                if (searchData.includes(query)) {
+                const cardStatus = card.getAttribute('data-status');
+                
+                const matchesSearch = searchData.includes(query);
+                const matchesStatus = (currentFilter === 'all' || cardStatus === currentFilter);
+
+                if (matchesSearch && matchesStatus) {
                     card.style.display = 'block';
+                    card.style.animation = 'fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            document.getElementById('visibleCountBadge').innerText = visibleCount + (visibleCount === 1 ? ' مقياس' : (visibleCount === 2 ? ' مقياسان' : ' مقاييس'));
+
+            const emptyState = document.getElementById('emptySearchState');
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
         }
 
-        // Filter Pills
+        function filterResearch() {
+            applyFilters();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            applyFilters();
+        }
+
         function setFilter(status) {
-            const cards = document.querySelectorAll('.module-card');
+            currentFilter = status;
             const buttons = ['all', 'ready', 'pending'];
             
             buttons.forEach(b => {
                 const btn = document.getElementById('btn-filter-' + b);
                 if (b === status) {
-                    btn.className = "whitespace-nowrap px-4 py-2.5 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-extrabold transition-all cursor-pointer shadow-2xs";
+                    btn.className = "px-2.5 sm:px-4 py-2 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-black text-xs transition-all duration-200 cursor-pointer shadow-xs active:scale-95 flex items-center justify-center gap-1";
                 } else {
-                    btn.className = "whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer";
+                    btn.className = "px-2.5 sm:px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold text-xs hover:bg-slate-50 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-1";
                 }
             });
 
-            cards.forEach(card => {
-                const cardStatus = card.getAttribute('data-status');
-                if (status === 'all' || cardStatus === status) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+            applyFilters();
         }
 
-        // Team Modal Switcher Tabs
         function switchModalTab(tab) {
             const tabStudents = document.getElementById('tab-students');
             const tabProfessors = document.getElementById('tab-professors');
@@ -898,26 +1150,43 @@
             const panelProfessors = document.getElementById('panel-professors');
 
             if (tab === 'students') {
-                tabStudents.className = "flex-1 py-2.5 px-3 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-blue-600 text-white shadow-xs transition-all cursor-pointer";
-                tabProfessors.className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer";
+                tabStudents.className = "flex-1 py-2 px-3 rounded-xl font-black text-xs flex items-center justify-center gap-1.5 bg-blue-600 text-white shadow-2xs transition-all cursor-pointer text-center";
+                tabProfessors.className = "flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer text-center";
                 panelStudents.classList.remove('hidden');
                 panelProfessors.classList.add('hidden');
             } else {
-                tabProfessors.className = "flex-1 py-2.5 px-3 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-blue-600 text-white shadow-xs transition-all cursor-pointer";
-                tabStudents.className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer";
+                tabProfessors.className = "flex-1 py-2 px-3 rounded-xl font-black text-xs flex items-center justify-center gap-1.5 bg-blue-600 text-white shadow-2xs transition-all cursor-pointer text-center";
+                tabStudents.className = "flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer text-center";
                 panelProfessors.classList.remove('hidden');
                 panelStudents.classList.add('hidden');
             }
         }
 
-        // Team Modal
         function openTeamModal() {
-            document.getElementById('teamModal').classList.remove('hidden');
+            const modal = document.getElementById('teamModal');
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                modal.classList.add('show');
+            });
             switchModalTab('students');
         }
+
         function closeTeamModal() {
-            document.getElementById('teamModal').classList.add('hidden');
+            const modal = document.getElementById('teamModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 250);
         }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('teamModal');
+                if (!modal.classList.contains('hidden')) {
+                    closeTeamModal();
+                }
+            }
+        });
     </script>
 </body>
 </html>
