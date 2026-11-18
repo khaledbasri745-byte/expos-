@@ -193,10 +193,10 @@
                     الكل (<span id="count-all">4</span>)
                 </button>
                 <button onclick="setFilter('pending')" id="btn-filter-pending" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
-                    قيد التحديث (<span id="count-pending">1</span>)
+                    قيد التحديث (<span id="count-pending">2</span>)
                 </button>
                 <button onclick="setFilter('ready')" id="btn-filter-ready" class="whitespace-nowrap px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold hover:bg-slate-50 transition-all cursor-pointer">
-                    جاهز للتحميل (<span id="count-ready">3</span>)
+                    جاهز للتحميل (<span id="count-ready">2</span>)
                 </button>
             </div>
 
@@ -214,17 +214,17 @@
         <!-- Research Modules Container -->
         <div class="space-y-4" id="modulesContainer">
 
-            <!-- MODULE 1: قانون الشركات -->
-            <div class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200" data-status="ready" data-search="قانون الشركات المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد">
+            <!-- MODULE 1: قانون الشركات (Excluded from DataShow note as requested) -->
+            <div class="module-card academic-card rounded-2xl overflow-hidden" data-status="pending" data-search="قانون الشركات المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد">
                 
-                <button onclick="toggleAccordion('acc-1')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
+                <button onclick="toggleAccordion('acc-1')" class="w-full p-5 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
                     <div class="flex items-center gap-4">
                         <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-md shadow-blue-500/25 flex items-center justify-center text-xl font-bold border border-blue-400/30 group-hover:scale-105 transition-transform">
                             <i class="fa-solid fa-scale-balanced"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1"><i class="fa-solid fa-circle-check text-[8px]"></i> جاهز للتحميل - تم عرض البحث</span>
+                                <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> قيد التحديث</span>
                             </div>
                             <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: قانون الشركات</h3>
                         </div>
@@ -300,8 +300,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-[11px] text-emerald-700 flex items-center gap-1.5 pt-2 font-bold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
-                                        <i class="fa-solid fa-circle-check"></i> تم عرض البحث وهو جاهز للتحميل
+                                    <div class="text-[11px] text-amber-600 flex items-center gap-1.5 pt-2 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                                        <i class="fa-solid fa-clock"></i> الملف قيد التحديث والرفع قريباً
                                     </div>
                                 </div>
                             </div>
@@ -458,7 +458,7 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1"><i class="fa-solid fa-circle-check text-[8px]"></i> جاهز للتحميل</span>
+                                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1"><i class="fa-solid fa-circle-check text-[8px]"></i> جاهز للتحميل - تم عرض البحث</span>
                             </div>
                             <h3 class="text-base sm:text-lg font-extrabold text-slate-900">مقياس: محاسبة الشركات</h3>
                         </div>
@@ -535,7 +535,7 @@
                                         </div>
                                     </div>
                                     <div class="text-[11px] text-emerald-700 flex items-center gap-1.5 pt-2 font-bold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
-                                        <i class="fa-solid fa-circle-check"></i> البحث مكتمل وجاهز للتحميل المباشر
+                                        <i class="fa-solid fa-circle-check"></i> تم عرض البحث وهو جاهز للتحميل
                                     </div>
                                 </div>
 
