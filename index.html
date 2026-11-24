@@ -279,10 +279,10 @@
                         <i class="fa-solid fa-border-all text-[11px]"></i> <span>الكل (<span id="count-all">4</span>)</span>
                     </button>
                     <button onclick="setFilter('pending')" id="btn-filter-pending" class="px-2.5 sm:px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold text-xs hover:bg-slate-50 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-1">
-                        <i class="fa-solid fa-clock text-amber-500 text-[11px]"></i> <span>قيد التحديث (<span id="count-pending">1</span>)</span>
+                        <i class="fa-solid fa-clock text-amber-500 text-[11px]"></i> <span>قيد التحديث (<span id="count-pending">0</span>)</span>
                     </button>
                     <button onclick="setFilter('ready')" id="btn-filter-ready" class="px-2.5 sm:px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-600 font-bold text-xs hover:bg-slate-50 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-1">
-                        <i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> <span>جاهز (<span id="count-ready">3</span>)</span>
+                        <i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> <span>جاهز (<span id="count-ready">4</span>)</span>
                     </button>
                 </div>
 
@@ -365,7 +365,7 @@
                                 </h4>
                             </div>
                             <span id="mod1-sub-badge" class="text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0">
-                                <i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي معتمد
+                                <i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي معتمد عن بعد
                             </span>
                         </div>
 
@@ -431,7 +431,7 @@
                                 <a href="#" onclick="event.preventDefault(); showToast('الملف مضغوط ويمكنك تحميله على شكل ملف ZIP وفتحه', 'info')" class="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-orange-600/15 transition-all cursor-pointer text-center">
                                     <i class="fa-solid fa-file-powerpoint text-sm"></i> عرض PowerPoint (ZIP)
                                 </a>
-                                <a href="https://bosfiles.net/download/GRe9Nm9VXgHcisLhocyQ7Q" download="المؤسسة_ذات_المسؤولية_المحدودة_ذات_الشخص_الوحيد.mp4" target="_blank" class="btn-shimmer flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-purple-600/15 transition-all cursor-pointer text-center">
+                                <a href="https://bosfiles.net/download/o7ihdjfCGRP4Q8RvUxoWSg" download="المؤسسة_ذات_المسؤولية_المحدودة_ذات_الشخص_الوحيد.mp4" target="_blank" class="btn-shimmer flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-purple-600/15 transition-all cursor-pointer text-center">
                                     <i class="fa-solid fa-file-video text-sm"></i> تحميل MP4
                                 </a>
                             </div>
@@ -500,7 +500,7 @@
                                 </h4>
                             </div>
                             <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
-                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> تمت المناقشة بنجاح
+                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i>  تمت المناقشة بنجاح حضوري
                             </span>
                         </div>
 
@@ -623,7 +623,7 @@
                                 </h4>
                             </div>
                             <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
-                                <i class="fa-solid fa-presentation-screen text-emerald-600 me-1"></i> تم المناقشة بنجاح
+                                <i class="fa-solid fa-presentation-screen text-emerald-600 me-1"></i> تم المناقشة بنجاح حضوري
                             </span>
                         </div>
 
@@ -709,18 +709,18 @@
             </div>
 
             <!-- MODULE 4: التسيير المالي -->
-            <div id="card-acc-4" class="module-card academic-card rounded-2xl overflow-hidden transition-all duration-300" data-status="pending" data-search="التسيير المالي تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
+            <div id="card-acc-4" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="التسيير المالي تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
                 
-                <button onclick="toggleAccordion('acc-4')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/40 transition-colors group">
+                <button onclick="toggleAccordion('acc-4')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
                     <div class="flex items-center gap-4 sm:gap-5">
                         <div class="w-14 h-14 rounded-2xl bg-violet-600 text-white shadow-md flex items-center justify-center text-xl font-bold group-hover:scale-105 transition-transform shrink-0">
                             <i class="fa-solid fa-chart-pie"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-[10px] text-amber-700 font-black bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200 inline-flex items-center gap-1.5 shadow-2xs">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
-                                    قيد التحديث الإداري
+                                <span id="mod4-header-badge" class="text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                     جاهز للتحميل
                                 </span>
                             </div>
                             <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-violet-700 transition-colors">مقياس: التسيير المالي</h3>
@@ -745,8 +745,8 @@
                                     تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل
                                 </h4>
                             </div>
-                            <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0">
-                                <i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي قيد الإعداد
+                            <span id="mod4-sub-badge" class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
+                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> جاهز للتحميل حضوري
                             </span>
                         </div>
 
@@ -799,9 +799,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-[11px] text-amber-700 flex items-center gap-2 pt-2 font-bold bg-amber-50 p-3 rounded-xl border border-amber-200">
-                                    <i class="fa-solid fa-clock text-amber-500 text-sm shrink-0"></i>
-                                    <span>الملف قيد التحديث والرفع قريباً</span>
+                                <div id="mod4-status-box" class="text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                                    <i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i>
+                                    <span>جاهز للتحميل</span>
                                 </div>
                             </div>
                         </div>
@@ -811,14 +811,14 @@
                                 <i class="fa-solid fa-box-archive me-1 text-blue-600"></i> خيارات التحميل والملفات:
                             </span>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center text-center gap-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all cursor-pointer">
-                                    <i class="fa-solid fa-file-pdf text-sm"></i> تحميل PDF
+                                <a href="https://bosfiles.net/download/gbM0jjo2_teWs_hkXsVQDA" download="تحليل_المخاطر_التشغيلية_بإستخدام_الرافعة_ونقطة_تعادل.pdf" target="_blank" class="btn-shimmer flex items-center justify-center text-center gap-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-emerald-600/20 transition-all cursor-pointer">
+                                    <i class="fa-solid fa-download text-sm"></i> تحميل PDF (مباشر)
                                 </a>
-                                <a href="#" onclick="event.preventDefault(); showToast('الملف قيد الإعداد والرفع قريباً')" class="flex items-center justify-center text-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all cursor-pointer">
-                                    <i class="fa-solid fa-file-word text-sm"></i> تحميل Word
+                                <a href="https://bosfiles.net/download/Z-_quPC8M7RjvJmal7fc6g" download="تحليل_المخاطر_التشغيلية_بإستخدام_الرافعة_ونقطة_تعادل.docx" target="_blank" class="btn-shimmer flex items-center justify-center text-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-md shadow-blue-600/20 transition-all cursor-pointer">
+                                    <i class="fa-solid fa-file-word text-sm"></i> تحميل Word (مباشر)
                                 </a>
                                 <a href="#" onclick="event.preventDefault(); showToast('لعدم توفر إمكانيات عرض البحث المتمثلة في DataShow لم نقم برفع ملف PowerPoint')" class="flex items-center justify-center text-center gap-2.5 bg-orange-600 hover:bg-orange-700 active:scale-95 text-white font-black py-3.5 px-4 rounded-xl text-xs shadow-xs transition-all opacity-60 cursor-pointer">
-                                    <i class="fa-solid fa-file-powerpoint text-sm"></i> عرض PowerPoint
+                                    <i class="fa-solid fa-file-powerpoint text-sm"></i> عرض PowerPoint (غير متوفر)
                                 </a>
                             </div>
                             <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
@@ -1082,6 +1082,44 @@
                 if (statusBox) {
                     statusBox.className = 'text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200';
                     statusBox.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i><span>تمت المناقشة</span>';
+                }
+            }
+
+            // تحديث حالة بحث التسيير المالي: غداً (25 نوفمبر 2026) الساعة 12:00 ظهراً
+            const financialMgmtPresentedTime = new Date('2026-11-25T12:00:00');
+            const card4 = document.getElementById('card-acc-4');
+            if (card4) {
+                const isPresented = now >= financialMgmtPresentedTime;
+                const headerBadge4 = document.getElementById('mod4-header-badge');
+                const subBadge4 = document.getElementById('mod4-sub-badge');
+                const statusBox4 = document.getElementById('mod4-status-box');
+
+                if (isPresented) {
+                    if (headerBadge4) {
+                        headerBadge4.className = 'text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs';
+                        headerBadge4.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> جاهز للتحميل - تم عرض البحث';
+                    }
+                    if (subBadge4) {
+                        subBadge4.className = 'text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0';
+                        subBadge4.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> تم عرض البحث';
+                    }
+                    if (statusBox4) {
+                        statusBox4.className = 'text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200';
+                        statusBox4.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i><span>جاهز للتحميل - تم عرض البحث</span>';
+                    }
+                } else {
+                    if (headerBadge4) {
+                        headerBadge4.className = 'text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs';
+                        headerBadge4.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> جاهز للتحميل';
+                    }
+                    if (subBadge4) {
+                        subBadge4.className = 'text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0';
+                        subBadge4.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> جاهز للتحميل';
+                    }
+                    if (statusBox4) {
+                        statusBox4.className = 'text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200';
+                        statusBox4.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i><span>جاهز للتحميل</span>';
+                    }
                 }
             }
 
