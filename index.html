@@ -499,8 +499,8 @@
                                     موقع النظام المحاسبي المالي من نظرية المحاسبة
                                 </h4>
                             </div>
-                            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
-                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i>  تمت المناقشة بنجاح حضوري
+                            <span id="mod2-sub-badge" class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
+                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> بحث أكاديمي معتمد حضوري
                             </span>
                         </div>
 
@@ -622,8 +622,8 @@
                                     المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة
                                 </h4>
                             </div>
-                            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
-                                <i class="fa-solid fa-presentation-screen text-emerald-600 me-1"></i> تم المناقشة بنجاح حضوري
+                            <span id="mod3-sub-badge" class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
+                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> بحث أكاديمي معتمد حضوري
                             </span>
                         </div>
 
@@ -746,7 +746,7 @@
                                 </h4>
                             </div>
                             <span id="mod4-sub-badge" class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
-                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> جاهز للتحميل حضوري
+                                <i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> بحث أكاديمي معتمد حضوري
                             </span>
                         </div>
 
@@ -1060,6 +1060,28 @@
         let currentFilter = 'all';
         let toastTimeout;
 
+        const IN_PERSON_BADGE_CLASS = 'text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0';
+        const IN_PERSON_BADGE_HTML = '<i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> بحث أكاديمي معتمد حضوري';
+
+        const REMOTE_BADGE_CLASS = 'text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0';
+        const REMOTE_BADGE_HTML = '<i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي معتمد عن بعد';
+
+        function syncModuleBadges() {
+            const mod1Badge = document.getElementById('mod1-sub-badge');
+            if (mod1Badge) {
+                mod1Badge.className = REMOTE_BADGE_CLASS;
+                mod1Badge.innerHTML = REMOTE_BADGE_HTML;
+            }
+
+            ['mod2-sub-badge', 'mod3-sub-badge', 'mod4-sub-badge'].forEach(id => {
+                const badge = document.getElementById(id);
+                if (badge) {
+                    badge.className = IN_PERSON_BADGE_CLASS;
+                    badge.innerHTML = IN_PERSON_BADGE_HTML;
+                }
+            });
+        }
+
         function checkCompanyLawDiscussionStatus() {
             const discussionCompletedTime = new Date('2026-11-25T20:00:00');
             const now = new Date();
@@ -1070,12 +1092,6 @@
                 if (headerBadge) {
                     headerBadge.className = 'text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs';
                     headerBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> جاهز للتحميل - تمت المناقشة';
-                }
-
-                const subBadge = document.getElementById('mod1-sub-badge');
-                if (subBadge) {
-                    subBadge.className = 'text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0';
-                    subBadge.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> تمت المناقشة';
                 }
 
                 const statusBox = document.getElementById('mod1-status-box');
@@ -1091,17 +1107,12 @@
             if (card4) {
                 const isPresented = now >= financialMgmtPresentedTime;
                 const headerBadge4 = document.getElementById('mod4-header-badge');
-                const subBadge4 = document.getElementById('mod4-sub-badge');
                 const statusBox4 = document.getElementById('mod4-status-box');
 
                 if (isPresented) {
                     if (headerBadge4) {
                         headerBadge4.className = 'text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs';
                         headerBadge4.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> جاهز للتحميل - تم عرض البحث';
-                    }
-                    if (subBadge4) {
-                        subBadge4.className = 'text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0';
-                        subBadge4.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> تم عرض البحث';
                     }
                     if (statusBox4) {
                         statusBox4.className = 'text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200';
@@ -1112,10 +1123,6 @@
                         headerBadge4.className = 'text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs';
                         headerBadge4.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> جاهز للتحميل';
                     }
-                    if (subBadge4) {
-                        subBadge4.className = 'text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0';
-                        subBadge4.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 me-1"></i> جاهز للتحميل';
-                    }
                     if (statusBox4) {
                         statusBox4.className = 'text-[11px] text-emerald-800 flex items-center gap-2 pt-2 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200';
                         statusBox4.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i><span>جاهز للتحميل</span>';
@@ -1123,6 +1130,7 @@
                 }
             }
 
+            syncModuleBadges();
             updateFilterCounts();
         }
 
