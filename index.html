@@ -194,6 +194,126 @@
     </div>
 
     <!-- ==========================================================================
+       1. PLATFORM CLOSED INTERFACE (TEMPORARY CLOSURE AFTER 31/12/2026)
+       ========================================================================== -->
+    <section id="platformClosedScreen" class="hidden min-h-screen bg-blue-950 text-white hero-grid-pattern relative overflow-hidden flex items-center justify-center px-4 py-12">
+        <div class="animate-float-slow absolute -top-16 right-1/4 w-[440px] h-[440px] bg-rose-500/10 rounded-full blur-[150px] pointer-events-none"></div>
+        <div class="animate-float-delayed absolute -bottom-16 left-1/5 w-[420px] h-[420px] bg-amber-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="max-w-2xl w-full rounded-3xl bg-slate-900/90 backdrop-blur-2xl border border-amber-400/35 shadow-2xl p-6 sm:p-10 text-center space-y-6 relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/15 border border-rose-400/40 text-rose-300 text-xs font-black">
+                <i class="fa-solid fa-lock"></i>
+                <span>واجهة الإغلاق المؤقت للمنصة</span>
+            </div>
+
+            <div class="w-20 h-20 rounded-3xl bg-rose-500/15 border border-rose-400/40 text-rose-300 flex items-center justify-center text-3xl mx-auto shadow-lg">
+                <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+
+            <div class="space-y-2.5">
+                <h1 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                    المنصة مغلقة مؤقتاً بعد انتهاء فترة <span class="text-amber-300">السداسي الخامس (S5)</span>
+                </h1>
+                <p class="text-xs sm:text-sm text-blue-100/85 leading-relaxed font-medium max-w-xl mx-auto">
+                    انتهى العدّاد التنازلي المخصص لأرشيف السداسي الخامس يوم <strong class="text-white">31/12/2026 (23:59)</strong>، والمنصة حالياً في مرحلة الإغلاق المؤقت حتى موعد الصيانة والفتح يوم <strong class="text-amber-300">29/01/2027</strong> (وتستغرق الصيانة من <strong class="text-amber-300">24 ساعة إلى 48 ساعة</strong>).
+                </p>
+            </div>
+
+            <!-- العدّاد التنازلي حتى يوم 29/01/2027 -->
+            <div class="rounded-2xl bg-blue-950/90 border border-amber-400/40 p-5 space-y-4">
+                <div class="space-y-1">
+                    <span class="text-xs font-extrabold text-amber-300 block">
+                        <i class="fa-solid fa-clock-rotate-left me-1"></i> العدّاد التنازلي حتى يوم 29/01/2027:
+                    </span>
+                    <div id="reopenCountdownStatus" class="text-xs sm:text-sm font-bold text-emerald-300">
+                        الموعد المجدول: 29 / 01 / 2027 (مدة الصيانة: 24 ساعة إلى 48 ساعة)
+                    </div>
+                </div>
+
+                <div id="reopenCountdownGrid" class="grid grid-cols-4 gap-2.5 sm:gap-3 max-w-md mx-auto" dir="ltr">
+                    <div class="bg-slate-900/95 border border-blue-700/70 rounded-2xl px-2.5 py-3 text-center shadow-inner">
+                        <div id="open-days" class="text-xl sm:text-2xl font-black text-amber-300 tabular-nums leading-none">00</div>
+                        <div class="text-[10px] font-bold text-blue-200 mt-1">أيام</div>
+                    </div>
+                    <div class="bg-slate-900/95 border border-blue-700/70 rounded-2xl px-2.5 py-3 text-center shadow-inner">
+                        <div id="open-hours" class="text-xl sm:text-2xl font-black text-white tabular-nums leading-none">00</div>
+                        <div class="text-[10px] font-bold text-blue-200 mt-1">ساعات</div>
+                    </div>
+                    <div class="bg-slate-900/95 border border-blue-700/70 rounded-2xl px-2.5 py-3 text-center shadow-inner">
+                        <div id="open-minutes" class="text-xl sm:text-2xl font-black text-white tabular-nums leading-none">00</div>
+                        <div class="text-[10px] font-bold text-blue-200 mt-1">دقائق</div>
+                    </div>
+                    <div class="bg-slate-900/95 border border-amber-400/50 rounded-2xl px-2.5 py-3 text-center shadow-inner">
+                        <div id="open-seconds" class="text-xl sm:text-2xl font-black text-emerald-400 tabular-nums leading-none">00</div>
+                        <div class="text-[10px] font-bold text-blue-200 mt-1">ثوانٍ</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 text-xs">
+                <a href="mailto:khaled.basri745@gmail.com" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3.5 rounded-2xl transition-all shadow-lg">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>التواصل مع الإدارة الأكاديمية</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       2. DEDICATED MAINTENANCE INTERFACE FOR 29/01/2027
+       ========================================================================== -->
+    <section id="maintenance29JanScreen" class="hidden min-h-screen bg-slate-950 text-white hero-grid-pattern relative overflow-hidden flex items-center justify-center px-4 py-12">
+        <div class="animate-float-slow absolute -top-16 right-1/4 w-[440px] h-[440px] bg-amber-500/15 rounded-full blur-[150px] pointer-events-none"></div>
+        <div class="animate-float-delayed absolute -bottom-16 left-1/5 w-[420px] h-[420px] bg-blue-500/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="max-w-2xl w-full rounded-3xl bg-slate-900/95 backdrop-blur-2xl border border-amber-400/50 shadow-2xl p-6 sm:p-10 text-center space-y-6 relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/50 text-amber-300 text-xs font-black">
+                <i class="fa-solid fa-screwdriver-wrench animate-spin" style="animation-duration: 8s;"></i>
+                <span>تنويه صيانة مجدولة — يوم 29/01/2027</span>
+            </div>
+
+            <div class="w-20 h-20 rounded-3xl bg-amber-500/20 border border-amber-400/50 text-amber-300 flex items-center justify-center text-3xl mx-auto shadow-lg">
+                <i class="fa-solid fa-gears"></i>
+            </div>
+
+            <div class="space-y-3">
+                <h1 class="text-2xl sm:text-4xl font-black text-amber-300 leading-tight">
+                    المنصة تحت الصيانة في يوم 29/01/2027
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-semibold max-w-xl mx-auto">
+                    تُعلمكم إدارة المنصة أن <strong class="text-white">منصة البحوث الجامعية الرقمية</strong> تخضع لأعمال الصيانة والتحديث التقني والأكاديمي ابتداءً من يوم <strong class="text-amber-300">29/01/2027</strong> بعد فترة الإغلاق المؤقت التي بدأت عقب <strong class="text-white">31/12/2026</strong>، وتستغرق مدة الصيانة من <strong class="text-amber-300">24 ساعة إلى 48 ساعة</strong>.
+                </p>
+            </div>
+
+            <div class="rounded-2xl bg-blue-950/80 border border-amber-400/35 p-5 text-right space-y-3 text-xs sm:text-sm">
+                <div class="flex items-center justify-between border-b border-blue-800/70 pb-2.5">
+                    <span class="font-black text-amber-300 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info"></i> تفاصيل حالة الصيانة:
+                    </span>
+                    <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 text-[11px] font-black">تحت الصيانة</span>
+                </div>
+                <div class="space-y-2 text-blue-100/90 font-medium">
+                    <p><i class="fa-solid fa-calendar-check text-amber-400 me-2"></i> <strong class="text-white">تاريخ بدء الصيانة:</strong> 29 / 01 / 2027</p>
+                    <p><i class="fa-solid fa-hourglass-half text-amber-300 me-2"></i> <strong class="text-white">مدة الصيانة المتوقعة:</strong> من 24 ساعة إلى 48 ساعة</p>
+                    <p><i class="fa-solid fa-shield-halved text-emerald-400 me-2"></i> <strong class="text-white">الهدف:</strong> تحديث الأرشيف الرقمي، مراجعة الملفات والروابط، وتهيئة المنصة للخدمة.</p>
+                </div>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 text-xs">
+                <a href="mailto:khaled.basri745@gmail.com" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3.5 rounded-2xl transition-all shadow-lg">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>التواصل مع الدعم الفني</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       ACTIVE PLATFORM WRAPPER
+       ========================================================================== -->
+    <div id="activePlatformWrapper" class="min-h-screen flex flex-col justify-between">
+
+    <!-- ==========================================================================
        TOP INSTITUTIONAL ANNOUNCEMENT BAR
        ========================================================================== -->
     <div class="animate-top-bar bg-blue-950 text-blue-200 text-xs py-3 px-4 text-center font-bold tracking-wide border-b border-blue-900/90 flex flex-wrap items-center justify-center gap-3 relative z-20 shadow-inner">
@@ -203,7 +323,7 @@
         </div>
         <span class="hidden sm:inline text-blue-400">|</span>
         <span class="text-amber-300 bg-blue-900/80 px-3 py-1 rounded-full border border-blue-800 text-[11px]">
-            <i class="fa-solid fa-calendar-days me-1"></i> الموسم الجامعي 2026 / 2027 — السداسي الخامس (S6)
+            <i class="fa-solid fa-calendar-days me-1"></i> الموسم الجامعي 2026 / 2027 — السداسي الخامس (S5)
         </span>
     </div>
 
@@ -260,13 +380,13 @@
                     <div class="space-y-2.5 max-w-xl">
                         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 text-[11px] font-black">
                             <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                            <span id="countdownStatusLabel">العدّاد التنازلي للإغلاق المؤقت لأرشيف السداسي الخامس (S5)</span>
+                            <span id="countdownStatusLabel">العدّاد التنازلي لنهاية فترة السداسي الخامس (S5) وإغلاق المنصة</span>
                         </div>
                         <h2 id="countdownTitle" class="text-base sm:text-xl font-black text-white leading-snug">
                             إغلاق المنصة يوم <span class="text-amber-300">31/12/2026</span> على الساعة <span class="text-amber-300">23:59</span>
                         </h2>
                         <p id="countdownDescription" class="text-xs sm:text-[13px] text-blue-100/85 leading-relaxed font-medium">
-                            البحوث المعروضة حالياً هي بحوث <strong class="text-white font-extrabold">السداسي الخامس (S5)</strong>. عقب الإغلاق المؤقت، يُعاد فتح المنصة يوم <strong class="text-emerald-300 font-extrabold">30/01/2027</strong> خصيصاً لبحوث <strong class="text-amber-300 font-extrabold">السداسي الثاني (السداسي السادس S6) ومذكرة التخرج</strong>.
+                            نحن حالياً في <strong class="text-white font-extrabold">السداسي الخامس (S5)</strong>. عند انتهاء العدّاد التنازلي تظهر واجهة الإغلاق المؤقت ثم واجهة الصيانة في يوم <strong class="text-amber-300 font-extrabold">29/01/2027</strong> ولمدة تتراوح بين <strong class="text-amber-300 font-extrabold">24 ساعة إلى 48 ساعة</strong>.
                         </p>
                     </div>
 
@@ -295,20 +415,20 @@
                 <div class="mt-5 pt-4 border-t border-blue-800/70 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] sm:text-xs relative z-10">
                     <div class="flex items-center gap-2.5 bg-blue-950/60 px-3.5 py-2.5 rounded-xl border border-blue-800/70">
                         <i class="fa-solid fa-folder-check text-emerald-400 text-sm shrink-0"></i>
-                        <span><strong class="text-white">المعروض حالياً:</strong> بحوث السداسي الخامس (S5)</span>
+                        <span><strong class="text-white">الفترة الحالية:</strong> السداسي الخامس (S5)</span>
                     </div>
                     <div class="flex items-center gap-2.5 bg-blue-950/60 px-3.5 py-2.5 rounded-xl border border-rose-500/30">
                         <i class="fa-solid fa-lock text-rose-400 text-sm shrink-0"></i>
-                        <span><strong class="text-rose-200">الغلق المؤقت:</strong> 31/12/2026 على 23:59</span>
+                        <span><strong class="text-rose-200">الإغلاق المؤقت:</strong> 31/12/2026 على 23:59</span>
                     </div>
-                    <div class="flex items-center gap-2.5 bg-blue-950/60 px-3.5 py-2.5 rounded-xl border border-emerald-500/30">
-                        <i class="fa-solid fa-rocket text-amber-300 text-sm shrink-0"></i>
-                        <span><strong class="text-amber-300">الفتح القادم (S6):</strong> 30/01/2027 والمذكرة</span>
+                    <div class="flex items-center gap-2.5 bg-blue-950/60 px-3.5 py-2.5 rounded-xl border border-amber-500/40">
+                        <i class="fa-solid fa-screwdriver-wrench text-amber-300 text-sm shrink-0"></i>
+                        <span><strong class="text-amber-300">يوم الصيانة:</strong> 29/01/2027 (24 إلى 48 ساعة)</span>
                     </div>
                 </div>
             </div>
 
-            <div class="animate-hero-item delay-500 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div class="animate-hero-item delay-500 flex flex-col sm:flex-row items-center justify-center gap-3.5 flex-wrap">
                 <button onclick="openTeamModal()" class="btn-shimmer inline-flex items-center justify-center text-center gap-3 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-7 py-4 rounded-2xl text-xs sm:text-sm shadow-xl shadow-amber-500/25 transition-all duration-300 cursor-pointer">
                     <i class="fa-solid fa-id-badge text-base"></i>
                     <span>عرض قائمة أعضاء فريق العمل والطلبة وكذا الأساتذة المشرفين</span>
@@ -322,7 +442,7 @@
        ========================================================================== -->
     <main class="max-w-5xl mx-auto px-4 sm:px-6 -mt-9 relative z-20 pb-20 flex-grow w-full space-y-6">
 
-        <!-- Current S5 Archive Notice Card -->
+        <!-- Current S5 Notice Card -->
         <div class="animate-hero-item delay-250 academic-card p-4 sm:p-5 rounded-2xl bg-amber-50/90 border border-amber-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5 shadow-lg">
             <div class="flex items-start gap-3.5">
                 <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-base font-black shrink-0 shadow-xs">
@@ -330,11 +450,11 @@
                 </div>
                 <div class="space-y-1">
                     <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-xs sm:text-sm font-black text-slate-900">تنويه حول المحتوى المعروض حالياً — بحوث السداسي الخامس (S5)</span>
-                        <span class="text-[10px] font-black bg-blue-950 text-amber-300 px-2.5 py-0.5 rounded-full">مسار السداسي السادس S6</span>
+                        <span class="text-xs sm:text-sm font-black text-slate-900">تنويه حول السداسي الدراسي الحالي — السداسي الخامس (S5)</span>
+                        <span class="text-[10px] font-black bg-blue-950 text-amber-300 px-2.5 py-0.5 rounded-full">السداسي 5 (S5)</span>
                     </div>
                     <p class="text-xs text-slate-700 font-semibold leading-relaxed">
-                        البحوث والمقاييس المدرجة أدناه هي أرشيف <strong>السداسي الخامس (S5)</strong> المتاحة للتحميل حتى <strong>31/12/2026 (23:59)</strong> قبل الإغلاق المؤقت وإعادة الفتح في <strong>30/01/2027</strong> لبحوث السداسي الثاني (السداسي السادس) ومذكرة التخرج.
+                        البحوث والمقاييس المدرجة أدناه خاصة بـ <strong>السداسي الخامس (S5)</strong> ومتاحة للتحميل حتى <strong>31/12/2026 (23:59)</strong>، وبعدها تظهر واجهة الإغلاق المؤقت ثم واجهة الصيانة المخصصة ليوم <strong>29/01/2027</strong> ولمدة تتراوح بين <strong>24 ساعة إلى 48 ساعة</strong>.
                     </p>
                 </div>
             </div>
@@ -1010,7 +1130,7 @@
                     </div>
                     <div>
                         <h3 class="font-black text-sm sm:text-base">دليل الجامعة والطلبة</h3>
-                        <p class="text-[11px] text-blue-200">السنة الثالثة ليسانس محاسبة - الفوج 02 - السداسي 6</p>
+                        <p class="text-[11px] text-blue-200">السنة الثالثة ليسانس محاسبة - الفوج 02 - السداسي 5</p>
                     </div>
                 </div>
                 <button onclick="closeTeamModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-600 hover:rotate-90 text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xs shrink-0 text-xs">
@@ -1151,6 +1271,8 @@
         </div>
     </footer>
 
+    </div> <!-- End of #activePlatformWrapper -->
+
     <!-- ==========================================================================
        JAVASCRIPT LOGIC ENGINE
        ========================================================================== -->
@@ -1164,9 +1286,51 @@
         const REMOTE_BADGE_CLASS = 'text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0';
         const REMOTE_BADGE_HTML = '<i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي معتمد عن بعد';
 
-        // العدّاد التنازلي لإغلاق المنصة المؤقت: 31/12/2026 الساعة 23:59:59
+        // موعد إغلاق المنصة: 31/12/2026 الساعة 23:59:59
         const CLOSE_DEADLINE = new Date('2026-12-31T23:59:59').getTime();
-        const REOPEN_DATE = new Date('2027-01-30T00:00:00').getTime();
+        // بداية فترة الصيانة 29/01/2027 ونهايتها بعد 48 ساعة (31/01/2027 00:00:00)
+        const MAINTENANCE_29_START = new Date('2027-01-29T00:00:00').getTime();
+        const MAINTENANCE_29_END = new Date('2027-01-31T00:00:00').getTime();
+
+        function setVisibleScreen(screenKey) {
+            const closedScreen = document.getElementById('platformClosedScreen');
+            const maintenanceScreen = document.getElementById('maintenance29JanScreen');
+            const activeWrapper = document.getElementById('activePlatformWrapper');
+
+            if (closedScreen) closedScreen.classList.toggle('hidden', screenKey !== 'closed');
+            if (maintenanceScreen) maintenanceScreen.classList.toggle('hidden', screenKey !== 'maintenance29');
+            if (activeWrapper) activeWrapper.classList.toggle('hidden', screenKey !== 'normal');
+
+            if (screenKey !== 'normal') {
+                closeCompanyLawPdfModal();
+                closeTeamModal();
+            }
+        }
+
+        function updateReopenCountdown(now) {
+            const effectiveStart = Math.max(now, CLOSE_DEADLINE);
+            const diffToMaintenance = Math.max(0, MAINTENANCE_29_START - effectiveStart);
+
+            const openDaysEl = document.getElementById('open-days');
+            const openHoursEl = document.getElementById('open-hours');
+            const openMinutesEl = document.getElementById('open-minutes');
+            const openSecondsEl = document.getElementById('open-seconds');
+            const reopenStatusEl = document.getElementById('reopenCountdownStatus');
+
+            const days = Math.floor(diffToMaintenance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diffToMaintenance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diffToMaintenance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diffToMaintenance % (1000 * 60)) / 1000);
+
+            if (openDaysEl) openDaysEl.textContent = String(days).padStart(2, '0');
+            if (openHoursEl) openHoursEl.textContent = String(hours).padStart(2, '0');
+            if (openMinutesEl) openMinutesEl.textContent = String(minutes).padStart(2, '0');
+            if (openSecondsEl) openSecondsEl.textContent = String(seconds).padStart(2, '0');
+
+            if (reopenStatusEl) {
+                reopenStatusEl.textContent = 'موعد الصيانة المجدول: 29 / 01 / 2027 (مدة الصيانة: 24 ساعة إلى 48 ساعة)';
+            }
+        }
 
         function updatePlatformCountdown() {
             const now = Date.now();
@@ -1176,9 +1340,8 @@
             const hoursEl = document.getElementById('cd-hours');
             const minutesEl = document.getElementById('cd-minutes');
             const secondsEl = document.getElementById('cd-seconds');
-            const statusLabelEl = document.getElementById('countdownStatusLabel');
-            const titleEl = document.getElementById('countdownTitle');
-            const descEl = document.getElementById('countdownDescription');
+
+            updateReopenCountdown(now);
 
             if (diffToClose > 0) {
                 const days = Math.floor(diffToClose / (1000 * 60 * 60 * 24));
@@ -1195,23 +1358,15 @@
                 if (hoursEl) hoursEl.textContent = '00';
                 if (minutesEl) minutesEl.textContent = '00';
                 if (secondsEl) secondsEl.textContent = '00';
+            }
 
-                const isReopened = now >= REOPEN_DATE;
-                if (statusLabelEl) {
-                    statusLabelEl.textContent = isReopened
-                        ? 'تم فتح المنصة لبحوث السداسي الثاني (S6) ومذكرة التخرج'
-                        : 'المنصة في حالة إغلاق مؤقت استعداداً لبحوث السداسي الثاني (S6) والمذكرة';
-                }
-                if (titleEl) {
-                    titleEl.innerHTML = isReopened
-                        ? 'المنصة مفتوحة الآن لـ <span class="text-emerald-300">بحوث السداسي السادس ومذكرة التخرج</span>'
-                        : 'انتهت فترة أرشيف السداسي الخامس — <span class="text-amber-300">الفتح يوم 30/01/2027</span>';
-                }
-                if (descEl) {
-                    descEl.innerHTML = isReopened
-                        ? 'مرحباً بكم في مرحلة <strong class="text-amber-300 font-extrabold">السداسي السادس (S6) ومذكرة التخرج</strong> للموسم الجامعي 2026 / 2027.'
-                        : 'تم إغلاق أرشيف السداسي الخامس مؤقتاً بتاريخ <strong class="text-amber-300">31/12/2026 (23:59)</strong>، وسيُعاد الفتح يوم <strong class="text-emerald-300 font-extrabold">30/01/2027</strong> لبحوث السداسي الثاني ومذكرة التخرج.';
-                }
+            const isMaintenanceWindow = now >= MAINTENANCE_29_START && now < MAINTENANCE_29_END;
+            if (isMaintenanceWindow) {
+                setVisibleScreen('maintenance29');
+            } else if (diffToClose <= 0) {
+                setVisibleScreen('closed');
+            } else {
+                setVisibleScreen('normal');
             }
         }
 
