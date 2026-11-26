@@ -203,7 +203,7 @@
         </div>
         <span class="hidden sm:inline text-blue-400">|</span>
         <span class="text-amber-300 bg-blue-900/80 px-3 py-1 rounded-full border border-blue-800 text-[11px]">
-            <i class="fa-solid fa-calendar-days me-1"></i> الموسم الجامعي 2026 / 2027
+            <i class="fa-solid fa-calendar-days me-1"></i> الموسم الجامعي 2026 / 2027 — السداسي السادس (S6)
         </span>
     </div>
 
@@ -240,12 +240,71 @@
                     <strong class="text-white text-sm font-black">الفوج الثاني (02)</strong>
                 </div>
                 <div class="bg-blue-900/60 backdrop-blur-xl p-4 rounded-2xl border border-blue-700/60 text-center shadow-lg transition-all duration-300">
-                    <span class="block text-blue-200 font-bold mb-1.5"><i class="fa-solid fa-graduation-cap text-sky-400 me-1.5"></i> المرحلة الدراسية</span>
-                    <strong class="text-white text-sm font-black">السنة الثالثة ليسانس</strong>
+                    <span class="block text-blue-200 font-bold mb-1.5"><i class="fa-solid fa-graduation-cap text-sky-400 me-1.5"></i> السداسي الدراسي</span>
+                    <strong class="text-amber-300 text-sm font-black">السداسي السادس (S6)</strong>
                 </div>
                 <div class="bg-blue-900/60 backdrop-blur-xl p-4 rounded-2xl border border-blue-700/60 text-center shadow-lg transition-all duration-300">
                     <span class="block text-blue-200 font-bold mb-1.5"><i class="fa-solid fa-calendar-days text-amber-400 me-1.5"></i> الدفعة</span>
                     <strong class="text-white text-sm font-black">2026 / 2027</strong>
+                </div>
+            </div>
+
+            <!-- ==================================================================
+                 PROFESSIONAL COUNTDOWN & SEMESTER TRANSITION BANNER
+                 ================================================================== -->
+            <div id="countdownBanner" class="animate-hero-item delay-450 max-w-4xl mx-auto mb-10 rounded-3xl bg-slate-900/85 backdrop-blur-2xl border border-amber-400/35 shadow-2xl p-5 sm:p-7 text-right relative overflow-hidden">
+                <div class="absolute -top-16 -left-16 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-16 -right-16 w-48 h-48 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative z-10">
+                    <div class="space-y-2.5 max-w-xl">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 text-[11px] font-black">
+                            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                            <span id="countdownStatusLabel">العدّاد التنازلي للإغلاق المؤقت لأرشيف السداسي الخامس (S5)</span>
+                        </div>
+                        <h2 id="countdownTitle" class="text-base sm:text-xl font-black text-white leading-snug">
+                            إغلاق المنصة يوم <span class="text-amber-300">31/12/2026</span> على الساعة <span class="text-amber-300">23:59</span>
+                        </h2>
+                        <p id="countdownDescription" class="text-xs sm:text-[13px] text-blue-100/85 leading-relaxed font-medium">
+                            البحوث المعروضة حالياً هي بحوث <strong class="text-white font-extrabold">السداسي الخامس (S5)</strong>. عقب الإغلاق المؤقت، يُعاد فتح المنصة يوم <strong class="text-emerald-300 font-extrabold">30/01/2027</strong> خصيصاً لبحوث <strong class="text-amber-300 font-extrabold">السداسي الثاني (السداسي السادس S6) ومذكرة التخرج</strong>.
+                        </p>
+                    </div>
+
+                    <!-- 4 Countdown Units -->
+                    <div id="countdownGrid" class="grid grid-cols-4 gap-2.5 sm:gap-3 shrink-0" dir="ltr">
+                        <div class="bg-blue-950/90 border border-blue-700/70 rounded-2xl px-3 py-3.5 sm:px-4 sm:py-4 text-center min-w-[68px] sm:min-w-[82px] shadow-inner">
+                            <div id="cd-days" class="text-2xl sm:text-3xl font-black text-amber-300 tabular-nums leading-none">00</div>
+                            <div class="text-[10px] sm:text-[11px] font-bold text-blue-200 mt-1.5">أيام</div>
+                        </div>
+                        <div class="bg-blue-950/90 border border-blue-700/70 rounded-2xl px-3 py-3.5 sm:px-4 sm:py-4 text-center min-w-[68px] sm:min-w-[82px] shadow-inner">
+                            <div id="cd-hours" class="text-2xl sm:text-3xl font-black text-white tabular-nums leading-none">00</div>
+                            <div class="text-[10px] sm:text-[11px] font-bold text-blue-200 mt-1.5">ساعات</div>
+                        </div>
+                        <div class="bg-blue-950/90 border border-blue-700/70 rounded-2xl px-3 py-3.5 sm:px-4 sm:py-4 text-center min-w-[68px] sm:min-w-[82px] shadow-inner">
+                            <div id="cd-minutes" class="text-2xl sm:text-3xl font-black text-white tabular-nums leading-none">00</div>
+                            <div class="text-[10px] sm:text-[11px] font-bold text-blue-200 mt-1.5">دقائق</div>
+                        </div>
+                        <div class="bg-blue-950/90 border border-amber-400/50 rounded-2xl px-3 py-3.5 sm:px-4 sm:py-4 text-center min-w-[68px] sm:min-w-[82px] shadow-inner">
+                            <div id="cd-seconds" class="text-2xl sm:text-3xl font-black text-emerald-400 tabular-nums leading-none">00</div>
+                            <div class="text-[10px] sm:text-[11px] font-bold text-blue-200 mt-1.5">ثوانٍ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline / Schedule Strip inside Banner -->
+                <div class="mt-5 pt-4 border-t border-blue-800/70 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] sm:text-xs relative z-10">
+                    <div class="flex items-center gap-2.5 bg-blue-950/60 px-3.5 py-2.5 rounded-xl border border-blue-800/70">
+                        <i class="fa-solid fa-folder-check text-emerald-400 text-sm shrink-0"></i>
+                        <span><strong class="text-white">المعروض حالياً:</strong> بحوث السداسي الخامس (S5)</span>
+                    </div>
+                    <div class="flex items-center gap-2.5 bg-blue-950/60 px-3.5 py-2.5 rounded-xl border border-rose-500/30">
+                        <i class="fa-solid fa-lock text-rose-400 text-sm shrink-0"></i>
+                        <span><strong class="text-rose-200">الغلق المؤقت:</strong> 31/12/2026 على 23:59</span>
+                    </div>
+                    <div class="flex items-center gap-2.5 bg-blue-950/60 px-3.5 py-2.5 rounded-xl border border-emerald-500/30">
+                        <i class="fa-solid fa-rocket text-amber-300 text-sm shrink-0"></i>
+                        <span><strong class="text-amber-300">الفتح القادم (S6):</strong> 30/01/2027 والمذكرة</span>
+                    </div>
                 </div>
             </div>
 
@@ -262,6 +321,24 @@
        MAIN CONTENT AREA
        ========================================================================== -->
     <main class="max-w-5xl mx-auto px-4 sm:px-6 -mt-9 relative z-20 pb-20 flex-grow w-full space-y-6">
+
+        <!-- Current S5 Archive Notice Card -->
+        <div class="animate-hero-item delay-250 academic-card p-4 sm:p-5 rounded-2xl bg-amber-50/90 border border-amber-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5 shadow-lg">
+            <div class="flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-base font-black shrink-0 shadow-xs">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs sm:text-sm font-black text-slate-900">تنويه حول المحتوى المعروض حالياً — بحوث السداسي الخامس (S5)</span>
+                        <span class="text-[10px] font-black bg-blue-950 text-amber-300 px-2.5 py-0.5 rounded-full">مسار السداسي السادس S6</span>
+                    </div>
+                    <p class="text-xs text-slate-700 font-semibold leading-relaxed">
+                        البحوث والمقاييس المدرجة أدناه هي أرشيف <strong>السداسي الخامس (S5)</strong> المتاحة للتحميل حتى <strong>31/12/2026 (23:59)</strong> قبل الإغلاق المؤقت وإعادة الفتح في <strong>30/01/2027</strong> لبحوث السداسي الثاني (السداسي السادس) ومذكرة التخرج.
+                    </p>
+                </div>
+            </div>
+        </div>
 
         <div class="animate-hero-item delay-300 academic-card p-4 sm:p-5 rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl space-y-3.5 border border-slate-200/80">
             <div class="relative w-full group">
@@ -308,7 +385,7 @@
                 <span class="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-sm shadow-sm shrink-0">
                     <i class="fa-solid fa-folder-open"></i>
                 </span>
-                <span>مقررات وبحوث المقاييس الدراسية</span> <span class="hidden sm:inline text-xs font-semibold text-slate-400">(اضغط على أي مقياس لعرض التفاصيل الكاملة)</span>
+                <span>مقررات وبحوث المقاييس الدراسية — السداسي الخامس (S5)</span> <span class="hidden sm:inline text-xs font-semibold text-slate-400">(اضغط على أي مقياس لعرض التفاصيل الكاملة)</span>
             </h2>
             <span id="visibleCountBadge" class="text-xs font-black text-blue-700 bg-blue-50 px-4 py-1.5 rounded-full border border-blue-200 shadow-2xs transition-all">4 مقاييس</span>
         </div>
@@ -328,7 +405,7 @@
         <div class="space-y-4" id="modulesContainer">
 
             <!-- MODULE 1: قانون الشركات -->
-            <div id="card-acc-1" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="قانون الشركات المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد ملاحظة امنية 6 تحميلات سرقة البحوث الثلاثاء">
+            <div id="card-acc-1" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="قانون الشركات السداسي الخامس المؤسسة ذات المسؤولية المحدودة ذات الشخص الوحيد بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوستة محمد شكر وتقدير">
                 
                 <button onclick="toggleAccordion('acc-1')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-blue-50/50 transition-colors group">
                     <div class="flex items-center gap-4 sm:gap-5">
@@ -336,11 +413,12 @@
                             <i class="fa-solid fa-scale-balanced"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1.5">
+                            <div class="flex flex-wrap items-center gap-2 mb-1.5">
                                 <span id="mod1-header-badge" class="text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                     جاهز للتحميل
                                 </span>
+                                <span class="text-[10px] text-blue-800 font-black bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">السداسي 5</span>
                             </div>
                             <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-blue-700 transition-colors">مقياس: قانون الشركات</h3>
                         </div>
@@ -356,23 +434,20 @@
                 <div id="acc-1" class="accordion-content">
                     <div class="p-5 sm:p-7 border-t border-slate-100 space-y-6 bg-slate-50/70">
 
-                        <!-- ملاحظة أمنية: 6 تحميلات قبل عرض بحث الفوج الأول ومجريات سرقة البحوث ليوم الثلاثاء -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-rose-50/90 border border-rose-200 text-rose-950 shadow-2xs space-y-2.5">
-                            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-rose-200/80 pb-2">
-                                <div class="flex items-center gap-2 font-black text-xs sm:text-sm text-rose-800">
-                                    <i class="fa-solid fa-shield-halved text-rose-600 text-base shrink-0"></i>
-                                    <span>ملاحظة أمنية — تنبيه حول التحميل ومجريات سرقة البحوث</span>
-                                </div>
-                                <span class="text-[11px] font-black bg-rose-600 text-white px-2.5 py-0.5 rounded-full shadow-2xs">
-                                    6 تحميلات قبل عرض بحث الفوج الأول
-                                </span>
+                        <!-- رسالة شكر وتقدير للدكتور الفاضل بوستة محمد -->
+                        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-l from-indigo-900 via-blue-900 to-indigo-950 text-white shadow-lg border border-indigo-500/30 flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-lg shrink-0 shadow-md">
+                                <i class="fa-solid fa-award"></i>
                             </div>
-                            <p class="text-xs sm:text-[13px] font-bold leading-relaxed text-rose-950">
-                                سُجّل في هذا المقياس <span class="underline decoration-rose-500 decoration-2 font-black">6 تحميلات</span> لملفات البحث قبل موعد عرض بحث الفوج الأول، وذلك في ظل محاولات متكررة لـ<span class="font-black text-rose-800">سرقة البحوث واستنساخ محاورها وعناوينها</span> المخصصة للعرض يوم <span class="font-black text-rose-900">الثلاثاء</span>.
-                            </p>
-                            <p class="text-[11px] sm:text-xs font-semibold leading-relaxed text-rose-900/90">
-                                وفق المجريات المرصودة، عمدت أطراف خارجية أو فرق متنافسة إلى سحب النسخ الرقمية والملخصات مبكراً لتمريرها أو إعادة صياغتها قبل الجلسة الرسمية ليوم الثلاثاء؛ لذا يُرجى من أعضاء الفريق التحلي بأقصى درجات الحيطة، وتوثيق النسخة الأصلية المعتمدة، وحفظ كافة مسودات العمل وسجل التعديلات لإثبات الملكية الفكرية والأكاديمية للبحث عند المناقشة والعرض.
-                            </p>
+                            <div class="space-y-1">
+                                <span class="text-[10px] uppercase tracking-wider text-amber-300 font-extrabold block">رسالة شكر وتقدير</span>
+                                <h4 class="text-sm sm:text-base font-black text-white leading-snug">
+                                    إلى الدكتور الفاضل: <span class="text-amber-300 font-extrabold">بوستة محمد</span>
+                                </h4>
+                                <p class="text-xs sm:text-sm text-blue-100/90 leading-relaxed font-medium pt-1">
+                                    أتقدم إليكم بخالص عبارات الشكر وعظيم الامتنان على ما قدمتموه لنا من توجيه علمي وتحفيز وتشجيع، فلكلماتكم وملاحظاتكم القيمة أثر بالغ في إثراء هذا البحث وتطوير مستوانا الأكاديمي. إن دعمكم وثقتكم محل تقدير واعتزاز كبيرين، وأسأل الله أن يجزيكم عنا خير الجزاء، وأن يبارك في علمكم وعملكم، ويديم عليكم التوفيق والنجاح. شكراً لكم من القلب، فبعض الكلمات لا تُنسى، وبعض المواقف تبقى محفورة في الذاكرة.
+                                </p>
+                            </div>
                         </div>
 
                         <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -466,7 +541,7 @@
             </div>
 
             <!-- MODULE 2: نظرية المحاسبة -->
-            <div id="card-acc-2" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="نظرية المحاسبة موقع النظام المحاسبي المالي من نظرية المحاسبة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوزيدي نصر الله حمادة محمد صادق فاروق">
+            <div id="card-acc-2" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="نظرية المحاسبة السداسي الخامس موقع النظام المحاسبي المالي من نظرية المحاسبة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور بوزيدي نصر الله حمادة محمد صادق فاروق">
                 
                 <button onclick="toggleAccordion('acc-2')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
                     <div class="flex items-center gap-4 sm:gap-5">
@@ -474,11 +549,12 @@
                             <i class="fa-solid fa-book-bookmark"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1.5">
+                            <div class="flex flex-wrap items-center gap-2 mb-1.5">
                                 <span class="text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                     جاهز للتحميل - تم عرض البحث
                                 </span>
+                                <span class="text-[10px] text-indigo-800 font-black bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200">السداسي 5</span>
                             </div>
                             <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-indigo-700 transition-colors">مقياس: نظرية المحاسبة</h3>
                         </div>
@@ -606,7 +682,7 @@
             </div>
 
             <!-- MODULE 3: محاسبة الشركات -->
-            <div id="card-acc-3" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="محاسبة الشركات المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف كرفيس فاطمة">
+            <div id="card-acc-3" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="محاسبة الشركات السداسي الخامس المعالجة المحاسبية للخسائر وأثرها على الوضعية المالية للمؤسسة بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف كرفيس فاطمة">
                 
                 <button onclick="toggleAccordion('acc-3')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
                     <div class="flex items-center gap-4 sm:gap-5">
@@ -614,11 +690,12 @@
                             <i class="fa-solid fa-calculator"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1.5">
+                            <div class="flex flex-wrap items-center gap-2 mb-1.5">
                                 <span class="text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                     جاهز للتحميل - تم عرض البحث
                                 </span>
+                                <span class="text-[10px] text-emerald-800 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">السداسي 5</span>
                             </div>
                             <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-emerald-700 transition-colors">مقياس: محاسبة الشركات</h3>
                         </div>
@@ -729,7 +806,7 @@
             </div>
 
             <!-- MODULE 4: التسيير المالي -->
-            <div id="card-acc-4" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="التسيير المالي تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
+            <div id="card-acc-4" class="module-card academic-card rounded-2xl overflow-hidden border-emerald-200 transition-all duration-300" data-status="ready" data-search="التسيير المالي السداسي الخامس تحليل المخاطر التشغيلية بإستخدام الرافعة ونقطة تعادل بصري خالد ابو الوليد بوشحي شيخ البشير مباركي منصور برنو عبد النور بن عباس يوسف قاسمي عبد الكريم">
                 
                 <button onclick="toggleAccordion('acc-4')" class="w-full p-5 sm:p-6 text-right flex justify-between items-center cursor-pointer select-none focus:outline-none bg-white hover:bg-emerald-50/40 transition-colors group">
                     <div class="flex items-center gap-4 sm:gap-5">
@@ -737,11 +814,12 @@
                             <i class="fa-solid fa-chart-pie"></i>
                         </div>
                         <div>
-                            <div class="flex items-center gap-2 mb-1.5">
+                            <div class="flex flex-wrap items-center gap-2 mb-1.5">
                                 <span id="mod4-header-badge" class="text-[10px] text-emerald-700 font-black bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-flex items-center gap-1.5 shadow-2xs">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                      جاهز للتحميل
                                 </span>
+                                <span class="text-[10px] text-violet-800 font-black bg-violet-50 px-2.5 py-1 rounded-md border border-violet-200">السداسي 5</span>
                             </div>
                             <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-violet-700 transition-colors">مقياس: التسيير المالي</h3>
                         </div>
@@ -932,7 +1010,7 @@
                     </div>
                     <div>
                         <h3 class="font-black text-sm sm:text-base">دليل الجامعة والطلبة</h3>
-                        <p class="text-[11px] text-blue-200">السنة الثالثة ليسانس محاسبة - الفوج 02</p>
+                        <p class="text-[11px] text-blue-200">السنة الثالثة ليسانس محاسبة - الفوج 02 - السداسي 6</p>
                     </div>
                 </div>
                 <button onclick="closeTeamModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-600 hover:rotate-90 text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xs shrink-0 text-xs">
@@ -1086,6 +1164,57 @@
         const REMOTE_BADGE_CLASS = 'text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0';
         const REMOTE_BADGE_HTML = '<i class="fa-solid fa-file-lines text-blue-600 me-1"></i> بحث أكاديمي معتمد عن بعد';
 
+        // العدّاد التنازلي لإغلاق المنصة المؤقت: 31/12/2026 الساعة 23:59:59
+        const CLOSE_DEADLINE = new Date('2026-12-31T23:59:59').getTime();
+        const REOPEN_DATE = new Date('2027-01-30T00:00:00').getTime();
+
+        function updatePlatformCountdown() {
+            const now = Date.now();
+            const diffToClose = CLOSE_DEADLINE - now;
+
+            const daysEl = document.getElementById('cd-days');
+            const hoursEl = document.getElementById('cd-hours');
+            const minutesEl = document.getElementById('cd-minutes');
+            const secondsEl = document.getElementById('cd-seconds');
+            const statusLabelEl = document.getElementById('countdownStatusLabel');
+            const titleEl = document.getElementById('countdownTitle');
+            const descEl = document.getElementById('countdownDescription');
+
+            if (diffToClose > 0) {
+                const days = Math.floor(diffToClose / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diffToClose % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diffToClose % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffToClose % (1000 * 60)) / 1000);
+
+                if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+                if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+                if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+            } else {
+                if (daysEl) daysEl.textContent = '00';
+                if (hoursEl) hoursEl.textContent = '00';
+                if (minutesEl) minutesEl.textContent = '00';
+                if (secondsEl) secondsEl.textContent = '00';
+
+                const isReopened = now >= REOPEN_DATE;
+                if (statusLabelEl) {
+                    statusLabelEl.textContent = isReopened
+                        ? 'تم فتح المنصة لبحوث السداسي الثاني (S6) ومذكرة التخرج'
+                        : 'المنصة في حالة إغلاق مؤقت استعداداً لبحوث السداسي الثاني (S6) والمذكرة';
+                }
+                if (titleEl) {
+                    titleEl.innerHTML = isReopened
+                        ? 'المنصة مفتوحة الآن لـ <span class="text-emerald-300">بحوث السداسي السادس ومذكرة التخرج</span>'
+                        : 'انتهت فترة أرشيف السداسي الخامس — <span class="text-amber-300">الفتح يوم 30/01/2027</span>';
+                }
+                if (descEl) {
+                    descEl.innerHTML = isReopened
+                        ? 'مرحباً بكم في مرحلة <strong class="text-amber-300 font-extrabold">السداسي السادس (S6) ومذكرة التخرج</strong> للموسم الجامعي 2026 / 2027.'
+                        : 'تم إغلاق أرشيف السداسي الخامس مؤقتاً بتاريخ <strong class="text-amber-300">31/12/2026 (23:59)</strong>، وسيُعاد الفتح يوم <strong class="text-emerald-300 font-extrabold">30/01/2027</strong> لبحوث السداسي الثاني ومذكرة التخرج.';
+                }
+            }
+        }
+
         function syncModuleBadges() {
             const mod1Badge = document.getElementById('mod1-sub-badge');
             if (mod1Badge) {
@@ -1121,7 +1250,7 @@
                 }
             }
 
-            // تحديث حالة بحث التسيير المالي: غداً (25 نوفمبر 2026) الساعة 12:00 ظهراً
+            // تحديث حالة بحث التسيير المالي: 25 نوفمبر 2026 الساعة 12:00 ظهراً
             const financialMgmtPresentedTime = new Date('2026-11-25T12:00:00');
             const card4 = document.getElementById('card-acc-4');
             if (card4) {
@@ -1176,6 +1305,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            updatePlatformCountdown();
+            setInterval(updatePlatformCountdown, 1000);
+
             checkCompanyLawDiscussionStatus();
             setInterval(checkCompanyLawDiscussionStatus, 30000);
         });
